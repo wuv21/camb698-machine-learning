@@ -1,0 +1,58 @@
+--- 
+title: "CAMB 698 Final Paper"
+author: "Vincent Wu"
+date: "`r Sys.Date()`"
+output: pdf_document
+description: Final paper covering machine learning topics
+documentclass: book
+link-citations: yes
+bibliography:
+- book.bib
+- packages.bib
+site: bookdown::bookdown_site
+biblio-style: apalike
+---
+
+# Prerequesites
+This book will feature code and graphs produced using the R statistical language. Below are packages that will be used throughout this book.
+
+```{r load_pkg, message=FALSE}
+library(tidyverse)
+library(usedist)
+library(qiimer)
+library(reshape2)
+library(ggplot2)
+
+library(ape)
+library(Rtsne)
+```
+
+The below code will load in the data that will be used in the next sections.
+```{r}
+load("data/poop_across_penn1.Rdata")
+```
+
+```{r}
+# Create vendor/mice dataframe
+s_vendor_all <- s %>%
+  filter(grepl("ARC Vendor Experiment", Experiment)) %>%
+  rename(Vendor = Mouse_Source_Vendor) %>%
+  mutate(SubjectID = factor(paste("Mouse", Mouse_Number))) %>%
+  mutate(SampleType = trimws(as.character(SampleType))) %>%
+  arrange(SampleType, Vendor, SubjectID)
+
+# Identify and remove suspicious samples
+suspect_SampleIDs <- c("Tac.33.CE.Day1", "Env.13.Stool.Day0")
+
+# Set final dataframe
+s_vendor <- s_vendor_all %>%
+  droplevels() %>%
+  filter(!(SampleID %in% suspect_SampleIDs))
+```
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
