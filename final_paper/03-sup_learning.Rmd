@@ -152,7 +152,7 @@ SVM is a popular method [@furey2000support; @guyon2002gene] used for classificat
 [^note_call_svm]: This post (\url(https://stats.stackexchange.com/questions/152897/how-to-intuitively-explain-what-a-kernel-is)) offers an explanation about how kernel tricks work.
 
 ### SVM example
-```{r, fig.cap="SVM classification of unweighted UniFrac distances"}
+```{r svm-ex, fig.cap="SVM classification of unweighted UniFrac distances"}
 svm_df <- pc_df_uu %>%
   select(Vendor, Axis.1, Axis.2)
 
@@ -171,3 +171,4 @@ pred <- predict(best_svm, svm_df, decision.values = TRUE)
 plot(best_svm, svm_df)
 ```
 
+In Figure \@ref(fig:svm-ex), SVM was applied to the PCoA transformed dataset (as seen in Figure \@ref(fig:pcoa-ex)). If the data points from Figure \@ref(fig:pcoa-ex) are mirrored and then rotated, the points will be the same as seen here in Figure \@ref(fig:svm-ex). Based on the shading, it is interesting to note how SVM can demarcate areas associated with different vendors in the PCoA space. These boundaries are effective, at least for this dataset, in classifying the samples by the correct vendor.
