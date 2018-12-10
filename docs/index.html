@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Machine Learning for Biological Sciences</title>
+  <meta name="description" content="Final paper for CAMB 698 covering machine learning topics">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Machine Learning for Biological Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Final paper for CAMB 698 covering machine learning topics" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Machine Learning for Biological Sciences" />
+  
+  <meta name="twitter:description" content="Final paper for CAMB 698 covering machine learning topics" />
+  
+
+<meta name="author" content="Vincent Wu">
+
+
+<meta name="date" content="2018-12-10">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+
+<link rel="next" href="bg.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">CAMB 698 Final Paper</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preword</a></li>
+<li class="chapter" data-level="2" data-path="bg.html"><a href="bg.html"><i class="fa fa-check"></i><b>2</b> Background</a></li>
+<li class="chapter" data-level="3" data-path="dim-red.html"><a href="dim-red.html"><i class="fa fa-check"></i><b>3</b> Dimensionality reduction</a><ul>
+<li class="chapter" data-level="3.1" data-path="dim-red.html"><a href="dim-red.html#introduction-to-dimensionality-reduction"><i class="fa fa-check"></i><b>3.1</b> Introduction to dimensionality reduction</a></li>
+<li class="chapter" data-level="3.2" data-path="dim-red.html"><a href="dim-red.html#pca-and-pcoa"><i class="fa fa-check"></i><b>3.2</b> PCA and PCoA</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="dim-red.html"><a href="dim-red.html#pcoa-example"><i class="fa fa-check"></i><b>3.2.1</b> PCoA example</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="dim-red.html"><a href="dim-red.html#t-sne"><i class="fa fa-check"></i><b>3.3</b> t-SNE</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="dim-red.html"><a href="dim-red.html#t-sne-example"><i class="fa fa-check"></i><b>3.3.1</b> t-SNE example</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="dim-red.html"><a href="dim-red.html#other-dimensionality-reduction-techniques"><i class="fa fa-check"></i><b>3.4</b> Other dimensionality reduction techniques</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="sup-learn.html"><a href="sup-learn.html"><i class="fa fa-check"></i><b>4</b> Supervised Learning</a><ul>
+<li class="chapter" data-level="4.1" data-path="sup-learn.html"><a href="sup-learn.html#introduction-to-supervised-learning"><i class="fa fa-check"></i><b>4.1</b> Introduction to supervised learning</a></li>
+<li class="chapter" data-level="4.2" data-path="sup-learn.html"><a href="sup-learn.html#regressions"><i class="fa fa-check"></i><b>4.2</b> Regressions</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="sup-learn.html"><a href="sup-learn.html#linear-regression-example"><i class="fa fa-check"></i><b>4.2.1</b> Linear regression example</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="sup-learn.html"><a href="sup-learn.html#k-nearest-neighbors-knn"><i class="fa fa-check"></i><b>4.3</b> K-nearest neighbors (KNN)</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="sup-learn.html"><a href="sup-learn.html#knn-example"><i class="fa fa-check"></i><b>4.3.1</b> KNN example</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="sup-learn.html"><a href="sup-learn.html#decision-trees"><i class="fa fa-check"></i><b>4.4</b> Decision trees</a></li>
+<li class="chapter" data-level="4.5" data-path="sup-learn.html"><a href="sup-learn.html#random-forests"><i class="fa fa-check"></i><b>4.5</b> Random forests</a></li>
+<li class="chapter" data-level="4.6" data-path="sup-learn.html"><a href="sup-learn.html#neural-networks-nn"><i class="fa fa-check"></i><b>4.6</b> Neural networks (NN)</a></li>
+<li class="chapter" data-level="4.7" data-path="sup-learn.html"><a href="sup-learn.html#support-vector-machines-svm"><i class="fa fa-check"></i><b>4.7</b> Support vector machines (SVM)</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="sup-learn.html"><a href="sup-learn.html#svm-example"><i class="fa fa-check"></i><b>4.7.1</b> SVM example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="unsup-learn.html"><a href="unsup-learn.html"><i class="fa fa-check"></i><b>5</b> Unsupervised Learning</a><ul>
+<li class="chapter" data-level="5.1" data-path="unsup-learn.html"><a href="unsup-learn.html#introduction-to-unsupervised-learning"><i class="fa fa-check"></i><b>5.1</b> Introduction to unsupervised learning</a></li>
+<li class="chapter" data-level="5.2" data-path="unsup-learn.html"><a href="unsup-learn.html#hierarchical-agglomerative-clustering"><i class="fa fa-check"></i><b>5.2</b> Hierarchical agglomerative clustering</a></li>
+<li class="chapter" data-level="5.3" data-path="unsup-learn.html"><a href="unsup-learn.html#hierarchical-divisive-clustering"><i class="fa fa-check"></i><b>5.3</b> Hierarchical divisive clustering</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="unsup-learn.html"><a href="unsup-learn.html#k-means-example"><i class="fa fa-check"></i><b>5.3.1</b> K-means example</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="unsup-learn.html"><a href="unsup-learn.html#hidden-markov-models-hmm"><i class="fa fa-check"></i><b>5.4</b> Hidden Markov models (HMM)</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="con.html"><a href="con.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Machine Learning for Biological Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Machine Learning for Biological Sciences</h1>
+<p class="author"><em>Vincent Wu</em></p>
+<p class="date"><em>2018-12-10</em></p>
+</div>
+<div id="preword" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Preword</h1>
+<p>This book is written and compiled using the <code>bookdown</code> package for the R statistical language. Sections of this book will feature code and graphs produced using R as well. As will be discussed in the next chapter, the purpose of this paper is to introduce and broadly cover common machine learning techniques that are used in the biological sciences. Any included R code is for generating graphs and results to provide additional content in conveying the different techniques. As such, I opted to include the R code as a starting point for any readers who want to explore the techniques.</p>
+<p>The following code in this chapter are needed to load in additional software packages as well as to load in the data that will be used.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(usedist)
+<span class="kw">library</span>(qiimer)
+<span class="kw">library</span>(reshape2)
+<span class="kw">library</span>(ggplot2)
+
+<span class="kw">library</span>(ape)
+<span class="kw">library</span>(tree)
+<span class="kw">library</span>(Rtsne)
+<span class="kw">library</span>(class)
+<span class="kw">library</span>(randomForest)
+<span class="kw">library</span>(e1071)
+<span class="kw">library</span>(cluster)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&quot;data/poop_across_penn1.Rdata&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create vendor/mice dataframe</span>
+s_vendor_all &lt;-<span class="st"> </span>s <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="kw">grepl</span>(<span class="st">&quot;ARC Vendor Experiment&quot;</span>, Experiment)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">Vendor =</span> Mouse_Source_Vendor) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">SubjectID =</span> <span class="kw">factor</span>(<span class="kw">paste</span>(<span class="st">&quot;Mouse&quot;</span>, Mouse_Number))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">SampleType =</span> <span class="kw">trimws</span>(<span class="kw">as.character</span>(SampleType))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(SampleType, Vendor, SubjectID)
+
+<span class="co"># Identify and remove suspicious samples</span>
+suspect_SampleIDs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Tac.33.CE.Day1&quot;</span>, <span class="st">&quot;Env.13.Stool.Day0&quot;</span>)
+
+<span class="co"># Set final dataframe</span>
+s_vendor &lt;-<span class="st"> </span>s_vendor_all <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">droplevels</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>(SampleID <span class="op">%in%</span><span class="st"> </span>suspect_SampleIDs))</code></pre></div>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="bg.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["final_paper.pdf", "final_paper.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
