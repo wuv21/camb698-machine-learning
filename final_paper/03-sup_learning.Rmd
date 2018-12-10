@@ -1,0 +1,164 @@
+# Supervised Learning {#sup_learn}
+## Introduction to supervised learning
+This section covers supervised learning techniques – where the output variables are already known. While there are many techniques available, this paper will cover (1) regressions (multiple linear vs logistic vs multinomial), (2) K-nearest neighbors, (3) decision trees, (4) random forests, (5) deep learning, (6) linear discriminant analysis, and (7) support vector machines. All of these methods can be found in biomedical research papers, especially those involving microbiome and next-generation sequencing data. Some of these methods will include the code implementation, whereas others will have only a description due to either data or paper restraints.
+
+## Regressions
+Regression is one of the simple (but still powerful) forms of supervised learning. In brief, regression is an attempt to understand the relationship between the input and output. A linear regression (commonly seen in papers with a plot, a regression line, a $r^2$ value, and a p-value) establishes a line with the lowest mean squared error (distance between the data points and the line). The $r^2$ value, also known as the coefficient of determination, describes how much of the variation in the output (typically the y-axis variable) is explained by the input (typically the x-axis variable). As mentioned in the background, the bias-variance tradeoff plays a role here as the ability to predict an output is determined by the mean squared error (or an equivalent measure) [@shalizi].
+
+### Linear regression example
+```{r, fig.cap="Linear regression example", fig.height=8}
+aa <- readRDS("data/aa.rds")
+mice <- readRDS("data/mice.rds")
+
+lr_df <- aa %>%
+  filter(Tissue == "Stool") %>%
+  select(MouseID, Tissue, Metabolite, ConcentrationNZ)
+
+lr_his_df <- lr_df %>%
+  filter(Metabolite == "Glycine") %>%
+  mutate(Glycine = ConcentrationNZ) %>%
+  select(MouseID, Tissue, Glycine) %>%
+  mutate(y = NA,
+         meta_comp = NA)
+
+lr_g_df <- lr_his_df
+
+lr_df <- lr_df %>%
+  filter(Metabolite != "Glycine")
+
+uniq_meta <- unique(lr_df$Metabolite)
+for (m in uniq_meta) {
+  df <- lr_df %>%
+    filter(Metabolite == m) %>%
+    mutate(Glycine = lr_his_df$Glycine,
+           y = ConcentrationNZ,
+           meta_comp = Metabolite) %>%
+    select(., -ConcentrationNZ, -Metabolite)
+  
+  lr_g_df <- rbind(lr_g_df, df)
+}
+
+lr_g_df <- lr_g_df %>% filter(!is.na(meta_comp))
+
+ggplot(lr_g_df, aes(x = Glycine, y = y)) +
+  geom_point(alpha = 0.75) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw() +
+  labs(title = "Amino acid comparisons in stool",
+    subtitle = "Glycine concentration vs other amino acids",
+    x = "Glycine concentration",
+    y = "Other amino acid concentration") +
+  facet_wrap(~ meta_comp, ncol = 3, scales = "free")
+```
+
+There are many types of regressions that are extensions of linear regression. For instance, a multilinear regression factors in more than one input variable to predict an output variable. Logistic regression is common in the biological sciences when trying to analyze a dependent variable that has a binary output (i.e. $y = 0$ or $y = 1$). This type of regression calculates the probability of $y = 1$, as a function of the independent variables. As such, a probability of greater or equal to 0.5 will result in a prediction that $y = 1$, otherwise it will predict $y = 0$. Multinomial regression (also known as polytomous regression) builds on the same principles as logistic regression. The main difference is that multinomial regression works for a dependent variable that has more than two categories (i.e. $y = 0$, $y = 1$, or $y = 2$).
+
+## K-nearest neighbors (KNN)
+KNN is a type of regression which takes into the account the distance between points, hence its name. This algorithm calculates the distance between data points and a new data point of interest (will be referred to as the query) to predict its classification. Of the ¬k (a positive integer that is less than the number of original data points) data points that are closest to the query, the algorithm will then return the mode or mean of the classifications of those data points (which is already known). The thought is that the samples with the closest distances to the query are likely to have the same classification, which would be the predicted output for the query. KNN falls under the category of a linear smoother in creating a regression curve that is smooth and close to the actual mean, when $k$ is increased. The choosing of $k$ for optimal KNN performance is important due to the bias-variance tradeoff but will not be discussed in this paper due to paper length restraints. 
+
+### KNN example
+```{r, fig.cap="KNN example"}
+knn_df <- pc_df_uu %>%
+  select(Vendor, Axis.1, Axis.2)
+
+run_knn <- function(k) {
+  res <- c()
+  
+  for (i in c(1:100)) {
+    df <- knn_df %>%
+      mutate(trial = sample(2, n(), replace = TRUE, prob = c(0.67, 0.33)))
+  
+    knn_train <- df %>%
+      filter(trial == 1)
+    
+    knn_test <- df %>%
+      filter(trial == 2)
+    
+    knn_prd <- knn(train = knn_train %>% select(., -Vendor),
+                   test = knn_test %>% select(., -Vendor),
+                   cl = knn_train$Vendor,
+                   k = k)
+    
+    prop <- sum((knn_test$Vendor == knn_prd) == TRUE,
+                na.rm = TRUE) / length(knn_prd)
+    res <- c(res, prop)
+  }
+  
+  return(res)
+}
+
+res_df <- data.frame(k = c(rep(2, 100), rep(3, 100), rep(4, 100), rep(5, 100)),
+                     accuracy = c(run_knn(2),
+                                  run_knn(3),
+                                  run_knn(4),
+                                  run_knn(5)))
+
+ggplot(res_df, aes(x = accuracy, fill = as.factor(k), color = as.factor(k))) +
+  geom_density(alpha = 0.8) +
+  labs(title = "KNN Regression with Varied k values",
+       color = "k value",
+       fill = "k value",
+       x = "Prediction accuracy",
+       y = "Density") +
+  theme_bw()
+```
+
+## Decision trees
+Decision trees fall into the category of nonparametric supervised learning methods, meaning that it does not depend on the distribution of the variables. In brief, decision trees separate the data based on different variables and construct a tree for predicting the final classification. The algorithm aims to create the smallest tree (requires the least number of variables) that increases information gain (selecting variables that can split the data into two subsets that are individually homogenous).
+
+```{r, fig.cap="Decision tree example using amino acid concentrations to predict vendor"}
+aa_dt_df <- lr_df %>%
+  left_join(select(mice, MouseID, Vendor), by = "MouseID") %>%
+  mutate(Metabolite = gsub("[/ ]", "_", Metabolite)) %>%
+  spread(Metabolite, ConcentrationNZ) %>%
+  mutate(Vendor = as.factor(Vendor))
+
+aa_lbls <- colnames(aa_dt_df)[5:length(aa_dt_df)]
+
+tree_fm <- as.formula(paste("Vendor ~ ", paste(aa_lbls, collapse = " + "), sep = ""))
+
+tree_res <- tree(tree_fm, data = aa_dt_df)
+
+plot(tree_res)
+text(tree_res)
+```
+
+## Random forests
+This method is an extension of decision trees with the same aim of predicting the final classification for a data point. The algorithm starts by randomly grabbing a chunk of data from the dataset (called the training data) and creating a single decision tree. It will then test the accuracy of that tree by using it on the data that was not initially used for constructing the tree. The algorithm then repeats this process by grabbing another random chunk of data and constructing another tree. By repeating this process multiple times, the algorithm will create a large number of decision trees, hence the term random forests. Once a random forest is established, the trees will take in new data and will each generate their own prediction of what the classification is. The algorithm will select the most common classification and return that as the predicted classification for the new data.
+
+```{r}
+forest_res <- randomForest(tree_fm, data = aa_dt_df)
+
+print(forest_res)
+```
+
+```{r}
+importance(forest_res)
+```
+
+## Neural networks (NN)
+NN and the field of deep learning, like many of the methods mentioned here, are topics that can each be written about in their own paper (or book). This subsection only serves to briefly introduce this and include resources for further exploration. NNs, in short, aim to mimic how neurons act. The input of data (analogous to neurotransmitters) results in an output (analogous to whether or not the neuron fires). The beauty of neural networks lies within its name, where multiple layers of neurons are connected with each other. NNs have impressive predictive capabilities by learning from vast amounts of data. For instance, NNs can be trained to recognize objects in pictures, to recognize handwriting, and other tasks that strike at the core of deep learning. NN are increasingly present in the biological sciences as research groups contribute towards large and accessible databases, which present prime opportunities for the development of neural networks to predict outputs such as treatment outcomes [@snow1994artificial; @kappen1993neural] and diagnoses [@ercal1994neural; @acharya2018deep; @esteva2017dermatologist].
+
+## Support vector machines (SVM)
+SVM is a popular method used for classification in the biological sciences because of its ability to deal with high dimensional data and to look at non-linear relationships. This method searches for a hyperplane (in 2D: a line; in 3D: a plane, etc.) that can separate the data points, which is determined by having the largest average distance from each of the data points to the hyperplane. SVM employs a method called a kernel trick to perceive data points in different dimensional space in order to find the best hyperplane. After a hyperplane is identified, new data points can be classified by which side they fall on the hyperplane.
+
+### SVM example
+```{r, fig.cap="SVM classification of unweighted UniFrac distances"}
+svm_df <- pc_df_uu %>%
+  select(Vendor, Axis.1, Axis.2)
+
+# get best model on cost
+model_svms <- tune(svm,
+                   as.factor(Vendor) ~ .,
+                   data = svm_df,
+                   kernel = "radial",
+                   ranges = list(cost = c(0.001, 0.01, 0.1, 1, 5, 10, 100)))
+
+# get parameters for best model
+best_svm <- model_svms$best.model
+
+# predict based on SVM and plot
+pred <- predict(best_svm, svm_df, decision.values = TRUE)
+plot(best_svm, svm_df)
+```
+

@@ -1,12 +1,14 @@
 # Dimensionality reduction {#dim_red}
 ## Introduction to dimensionality reduction
-Dimensionality reduction is a necessary tool for working with high-dimensional data, which can be seen from this dataset. Each of the diversity distances against each of the mice is a single variable, as is each of the relative abundances for different species. A variable is a dimension in this scenario – creating a dataset with hundreds of dimensions. While rich and informative, this dataset would be difficult to visualize beyond two dimensions. Without going too far into the mathematics behind these methods, dimensionality reduction creates a means to observe the data from a different perspective and assists in reducing the computational burden for the machine learning techniques that will be discussed.
+Dimensionality reduction is a necessary tool for working with high-dimensional data, which can be seen from this dataset. Each of the diversity distances against each of the mice is a single variable, as is each of the relative abundances for different species. A variable is a dimension in this scenario – creating a dataset with high dimensionality. While rich and informative, this dataset would be difficult to visualize beyond two dimensions. Without going too far into the mathematics behind these methods, dimensionality reduction creates a means to observe the data from a different perspective and assists in reducing the computational burden for the machine learning techniques that will be discussed.
 
 ## PCA and PCoA
-Principal components analysis (PCA) and principal coordinates analysis (PCoA) are common techniques used both in and outside of the biological sciences. PCA makes new variables that are linear combinations of the original variables. PCoA is similar in concept but takes in a distance matrix (such as the one used for our dataset) to transform into new coordinates where the axes of this coordinate system are not correlated with each other. The power of PCA and PCoA is that all new variables have no correlation with each other and can explain all the covariance from the original data. The data points in PCA or PCoA space can be easily visualized as seen in the below graph. It is common to display the variance explained by each of the principal component axes as a means to show how well the principal components can explain the variance in the original data.
+Principal components analysis (PCA) and principal coordinates analysis (PCoA) are common techniques used both in and outside of the biological sciences. PCA makes new variables that are linear combinations of the original variables [@shalizi]. PCoA is similar in concept but takes in a distance matrix (such as the one used for our dataset) to transform into new coordinates where the axes of this coordinate system are not correlated with each other. The power of PCA and PCoA is that all new variables have no correlation with each other and can explain all the covariance from the original data. The data points in PCA or PCoA space can be easily visualized as seen in the below graph. It is common to display the variance explained by each of the principal component axes as a means to show how well the principal components can explain the variance in the original data.
 
 ### PCoA example
-```{r, fig.cap="PCoA plot of microbiota distances between mice"}
+```{r pcoa-ex, fig.cap="PCoA plot of microbiota distances between mice"}
+## this code was modified from Kyle Bittinger's code
+
 # get unweighted unifrac distances
 uu <- dist_subset(uu, s_vendor$SampleID)
 
@@ -14,7 +16,7 @@ uu <- dist_subset(uu, s_vendor$SampleID)
 pc <- pcoa(uu)
 
 # create dataframe for ggplot2
-pc_df_uu <- cbind(s_vendor, pc$vectors[s_vendor$SampleID,1:3])
+pc_df_uu <- cbind(s_vendor, pc$vectors[s_vendor$SampleID, 1:3])
 
 # calculate variance coverage by axis
 pc_pct <- round(pc$values$Relative_eig * 100)
@@ -34,8 +36,50 @@ ggplot(pc_df_uu, aes(x = Axis.1, y = Axis.2)) +
   theme_classic()
 ```
 
+In Figure \@ref(fig:pcoa-ex), the PCoA plot was created from the microbiota distance matrix for each mouse (two points per mouse, since the microbiota was sampled in the cecum as well as in the stool). As shown on the axes, the first PCoA Axis explains 31% of the variance in the original distance matrix. Creating a PCoA plot allows for a quick and relatively simple way to visualize high-dimensional data to inform future decisions on machine learning. From this plot, it is interesting to note the separation of the different mice microbiota samples based on where the mice were bought.
+
 ## t-SNE
-Another commonly used dimensionality reduction technique is t-Distributed Stochastic Neighbor Embedding (t-SNE), which is a type of manifold learning. t-SNE starts by calculating pairwise distances in the high-dimensional space and using that information to calculate probabilities of a point being next to each other. The method then randomly maps the points onto a two-dimensional space and attempts to move the points – so that the probabilities of being next to the other points is similar to the original probabilities in the high-dimensional space. While a powerful technique, there are important caveats when compared to techniques such as PCA. The usage of random placing and probability-based calculations mean that when each time t-SNE is run, the result is slightly different (unlike in PCA or PCoA where each run is guaranteed to be the same). Furthermore, different settings in determining the calculation of conditional probabilities can impact the final outcome of the two-dimensional mapping.
+Another commonly used dimensionality reduction technique is t-Distributed Stochastic Neighbor Embedding (t-SNE) [@maaten2008visualizing], which is a type of manifold learning. t-SNE starts by calculating pairwise distances in the high-dimensional space and using that information to calculate probabilities of a point being next to each other [@tsnejs]. The method then randomly maps the points onto a two-dimensional space and attempts to move the points – so that the probabilities of being next to the other points is similar to the original probabilities in the high-dimensional space [@tsnejs]. While a powerful technique, there are important caveats when compared to techniques such as PCA. The usage of random placing and probability-based calculations mean that when each time t-SNE is run, the result is slightly different (unlike in PCA or PCoA where each run is guaranteed to be the same). Furthermore, different settings in determining the calculation of conditional probabilities can impact the final outcome of the two-dimensional mapping.
 
 ### t-SNE example
-<!-- You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015]. Test [@WinNT] test_article [@ahu61] -->
+```{r tsne-ex, fig.cap="t-SNE plot of microbiota distances between mice", out.width="100%"}
+# create tsne model
+do_tsne <- function(dist_matrix, perp) {
+  set.seed(9)
+  tsne_model <- Rtsne(as.matrix(dist_matrix),
+                      check_duplicates = FALSE,
+                      is_distance = TRUE,
+                      pca = FALSE,
+                      perplexity = perp,
+                      theta = 0.5,
+                      dims = 2)
+
+  return(as.data.frame(tsne_model$Y))
+}
+
+df_tsne <- do_tsne(uu, 1) %>%
+  mutate(perp = 1) %>%
+  cbind(s_vendor)
+
+for (i in c(2:9)) {
+  df <- do_tsne(uu, i) %>%
+    mutate(perp = i) %>%
+    cbind(s_vendor)
+  
+  df_tsne <- rbind(df_tsne, df)
+}
+
+ggplot(df_tsne, aes(x = V1, y = V2, color = Vendor)) +
+  geom_point() +
+  labs(title = "t-SNE Plot on Unweighted UniFrac Distances across Mice",
+       subtitle = "With varying perplexity settings",
+       x = "t-SNE Axis 1",
+       y = "t-SNE Axis 2") +
+  theme_bw() +
+  facet_wrap(~ perp, scales = "free")
+```
+
+In Figure \@ref(fig:tsne-ex), t-SNE analysis was done on the same distance matrix as in Figure \@ref(fig:pcoa-ex) to transform into a two-dimensional space. As with PCoA, one can see the differential clustering by vendor. As mentioned in the previous paragraph, t-SNE results can change based on the different settings. Figure \@ref(fig:tsne-ex) demonstrates how changing the `perplexity` can impact the final result.
+
+## Other dimensionality reduction techniques
+PCA, PCoA, and t-SNE are common techniques used for dimensionality reduction, but there are other methods that may perform better in different contexts. For instance, a recent paper describes a new technique similar to t-SNE for single-cell RNA sequencing called uniform approximation and projection (UMAP) [@becht2018dimensionality].  This method, like t-SNE, is considered a nonlinear dimensionality reduction technique, as opposed to PCA where the usage of linear combinations makes it a linear dimensionality reduction technique. While there are multiple techniques available, the usage of PCA, PCoA, and t-SNE are sufficient to demonstrate the machine learning techniques in the next section.
