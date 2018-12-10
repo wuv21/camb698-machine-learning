@@ -17,10 +17,10 @@ site: bookdown::bookdown_site
 biblio-style: apalike
 ---
 
-# Preword
+# Foreword
 This book is written and compiled using the `bookdown` package for the R statistical language. Sections of this book will feature code and graphs produced using R as well. As will be discussed in the next chapter, the purpose of this paper is to introduce and broadly cover common machine learning techniques that are used in the biological sciences. Any included R code is for generating graphs and results to provide additional content in conveying the different techniques. As such, I opted to include the R code as a starting point for any readers who want to explore the techniques.
 
-The following code in this chapter are needed to load in additional software packages as well as to load in the data that will be used.
+The following code in this chapter are needed to load in additional software packages and to load in the data that will be used in the later chapters.
 ```{r load_pkg, message=FALSE}
 library(tidyverse)
 library(usedist)

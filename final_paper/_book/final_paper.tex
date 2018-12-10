@@ -137,7 +137,7 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\chapter{Preword}\label{preword}
+\chapter{Foreword}\label{foreword}
 
 This book is written and compiled using the \texttt{bookdown} package
 for the R statistical language. Sections of this book will feature code
@@ -150,7 +150,8 @@ such, I opted to include the R code as a starting point for any readers
 who want to explore the techniques.
 
 The following code in this chapter are needed to load in additional
-software packages as well as to load in the data that will be used.
+software packages and to load in the data that will be used in the later
+chapters.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -216,11 +217,9 @@ as the PAP dataset) was provided by the PennCHOP Microbiome Program
 the purpose of assessing whether the mice have different phenotypes from
 different vendors. The fecal microbiota was sequenced from the mice,
 resulting in a distance matrix (how distant each mouse's microbiome was
-from the other mice sampled) as well as the relative abundance of
-bacterial species for each mouse. Additionally, metabolites as well as
-different immune phenotypes were assessed for each mouse. This
-high-dimensional dataset is representative of datasets that are seen
-with microbiome research.
+from the other mice sampled). Additionally, metabolites in stool and in
+the cecum were assessed for each mouse. This high-dimensional dataset is
+representative of datasets that are seen with microbiome research.
 
 Machine learning methods can fall under two main branches -- supervised
 versus unsupervised learning. The former branch consists of methods
@@ -281,10 +280,10 @@ into new coordinates where the axes of this coordinate system are not
 correlated with each other. The power of PCA and PCoA is that all new
 variables have no correlation with each other and can explain all the
 covariance from the original data. The data points in PCA or PCoA space
-can be easily visualized as seen in the below graph. It is common to
-display the variance explained by each of the principal component axes
-as a means to show how well the principal components can explain the
-variance in the original data.
+can be easily visualized as seen in Figure \ref{fig:pcoa-ex}. It is
+common to display the variance explained by each of the principal
+component axes as a means to show how well the principal components can
+explain the variance in the original data.
 
 \subsection{PCoA example}\label{pcoa-example}
 
@@ -433,12 +432,11 @@ This section covers supervised learning techniques -- where the output
 variables are already known. While there are many techniques available,
 this paper will cover (1) regressions (multiple linear vs logistic vs
 multinomial), (2) K-nearest neighbors, (3) decision trees, (4) random
-forests, (5) deep learning, (6) linear discriminant analysis, and (7)
-support vector machines. All of these methods can be found in biomedical
-research papers, especially those involving microbiome and
-next-generation sequencing data. Some of these methods will include the
-code implementation, whereas others will have only a description due to
-either data or paper restraints.
+forests, (5) deep learning, and (6) support vector machines. All of
+these methods can be found in biomedical research papers, especially
+those involving microbiome and next-generation sequencing data. Some of
+these methods will include the code implementation, whereas others will
+have only a description due to either data or paper restraints.
 
 \section{Regressions}\label{regressions}
 
