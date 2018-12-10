@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 5 Unsupervised Learning | Machine Learning for Biological Sciences</title>
+  <meta name="description" content="Final paper for CAMB 698 covering machine learning topics">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 5 Unsupervised Learning | Machine Learning for Biological Sciences />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Final paper for CAMB 698 covering machine learning topics" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Unsupervised Learning | Machine Learning for Biological Sciences />
+  
+  <meta name="twitter:description" content="Final paper for CAMB 698 covering machine learning topics" />
+  
+
+<meta name="author" content="Vincent Wu">
+
+
+<meta name="date" content="2018-12-10">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="sup-learn.html">
+<link rel="next" href="con.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">CAMB 698 Final Paper</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Foreword</a></li>
+<li class="chapter" data-level="2" data-path="bg.html"><a href="bg.html"><i class="fa fa-check"></i><b>2</b> Background</a></li>
+<li class="chapter" data-level="3" data-path="dim-red.html"><a href="dim-red.html"><i class="fa fa-check"></i><b>3</b> Dimensionality reduction</a><ul>
+<li class="chapter" data-level="3.1" data-path="dim-red.html"><a href="dim-red.html#introduction-to-dimensionality-reduction"><i class="fa fa-check"></i><b>3.1</b> Introduction to dimensionality reduction</a></li>
+<li class="chapter" data-level="3.2" data-path="dim-red.html"><a href="dim-red.html#pca-and-pcoa"><i class="fa fa-check"></i><b>3.2</b> PCA and PCoA</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="dim-red.html"><a href="dim-red.html#pcoa-example"><i class="fa fa-check"></i><b>3.2.1</b> PCoA example</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="dim-red.html"><a href="dim-red.html#t-sne"><i class="fa fa-check"></i><b>3.3</b> t-SNE</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="dim-red.html"><a href="dim-red.html#t-sne-example"><i class="fa fa-check"></i><b>3.3.1</b> t-SNE example</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="dim-red.html"><a href="dim-red.html#other-dimensionality-reduction-techniques"><i class="fa fa-check"></i><b>3.4</b> Other dimensionality reduction techniques</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="sup-learn.html"><a href="sup-learn.html"><i class="fa fa-check"></i><b>4</b> Supervised Learning</a><ul>
+<li class="chapter" data-level="4.1" data-path="sup-learn.html"><a href="sup-learn.html#introduction-to-supervised-learning"><i class="fa fa-check"></i><b>4.1</b> Introduction to supervised learning</a></li>
+<li class="chapter" data-level="4.2" data-path="sup-learn.html"><a href="sup-learn.html#regressions"><i class="fa fa-check"></i><b>4.2</b> Regressions</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="sup-learn.html"><a href="sup-learn.html#linear-regression-example"><i class="fa fa-check"></i><b>4.2.1</b> Linear regression example</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="sup-learn.html"><a href="sup-learn.html#k-nearest-neighbors-knn"><i class="fa fa-check"></i><b>4.3</b> K-nearest neighbors (KNN)</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="sup-learn.html"><a href="sup-learn.html#knn-example"><i class="fa fa-check"></i><b>4.3.1</b> KNN example</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="sup-learn.html"><a href="sup-learn.html#decision-trees"><i class="fa fa-check"></i><b>4.4</b> Decision trees</a></li>
+<li class="chapter" data-level="4.5" data-path="sup-learn.html"><a href="sup-learn.html#random-forests"><i class="fa fa-check"></i><b>4.5</b> Random forests</a></li>
+<li class="chapter" data-level="4.6" data-path="sup-learn.html"><a href="sup-learn.html#neural-networks-nn"><i class="fa fa-check"></i><b>4.6</b> Neural networks (NN)</a></li>
+<li class="chapter" data-level="4.7" data-path="sup-learn.html"><a href="sup-learn.html#support-vector-machines-svm"><i class="fa fa-check"></i><b>4.7</b> Support vector machines (SVM)</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="sup-learn.html"><a href="sup-learn.html#svm-example"><i class="fa fa-check"></i><b>4.7.1</b> SVM example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="unsup-learn.html"><a href="unsup-learn.html"><i class="fa fa-check"></i><b>5</b> Unsupervised Learning</a><ul>
+<li class="chapter" data-level="5.1" data-path="unsup-learn.html"><a href="unsup-learn.html#introduction-to-unsupervised-learning"><i class="fa fa-check"></i><b>5.1</b> Introduction to unsupervised learning</a></li>
+<li class="chapter" data-level="5.2" data-path="unsup-learn.html"><a href="unsup-learn.html#hierarchical-agglomerative-clustering"><i class="fa fa-check"></i><b>5.2</b> Hierarchical agglomerative clustering</a></li>
+<li class="chapter" data-level="5.3" data-path="unsup-learn.html"><a href="unsup-learn.html#hierarchical-divisive-clustering"><i class="fa fa-check"></i><b>5.3</b> Hierarchical divisive clustering</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="unsup-learn.html"><a href="unsup-learn.html#k-means-example"><i class="fa fa-check"></i><b>5.3.1</b> K-means example</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="unsup-learn.html"><a href="unsup-learn.html#hidden-markov-models-hmm"><i class="fa fa-check"></i><b>5.4</b> Hidden Markov models (HMM)</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="con.html"><a href="con.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Machine Learning for Biological Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="unsup_learn" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Unsupervised Learning</h1>
+<div id="introduction-to-unsupervised-learning" class="section level2">
+<h2><span class="header-section-number">5.1</span> Introduction to unsupervised learning</h2>
+<p>Unsupervised machine learning is arguably a more difficult task as the classifications are not known <em>a priori</em>. These methods use clustering to discover ways that the data can be grouped. Techniques mentioned above such as PCA, PCoA, and t-SNE can be useful in viewing the data in a lower dimension and can be a good starting point for unsupervised learning. This paper will cover 1) hierarchical clustering, 2) divisive clustering, and 3) hidden Markov models. As with the supervised learning section, some of these methods will be only be described while others will contain accompanying R code and graphics.</p>
+</div>
+<div id="hierarchical-agglomerative-clustering" class="section level2">
+<h2><span class="header-section-number">5.2</span> Hierarchical agglomerative clustering</h2>
+<p>This type of unsupervised learning can be seen from recent papers that utilize heatmaps and have dendrograms drawn on either or both axes <span class="citation">(Buggert et al. <a href="#ref-buggert2018identification">2018</a>; Byrd et al. <a href="#ref-byrd2017staphylococcus">2017</a>)</span>. These dendrograms are the final product of hierarchical clustering. Distance measurements between each data point are used to cluster the data points, which can then be portrayed as a binary tree (each branch point separates into two children). In a hierarchical clustering dendrogram, the similarities between two points can be assessed by looking at the height of the first shared node (analogous to looking at the most recent common ancestor in a phylogeny) <span class="citation">(Boehmke <a href="#ref-cluster">2018</a>)</span>. Hierarchical clustering can provide insight on any underlying structure and can be useful when accompanied with heatmaps to show clusters in a quantitative and qualitative manner <span class="citation">(Boehmke <a href="#ref-cluster">2018</a>)</span>.</p>
+</div>
+<div id="hierarchical-divisive-clustering" class="section level2">
+<h2><span class="header-section-number">5.3</span> Hierarchical divisive clustering</h2>
+<p>Divisive clustering is a type of hierarchical clustering that differs from agglomerative clustering by its approach in dividing the data. Agglomerative clustering, as its name suggests, starts with the data points as individual parts and starts grouping those together to create the tree (as if drawing the tree from the branches to the root) <span class="citation">(Boehmke <a href="#ref-cluster">2018</a>)</span>. Divisive clustering takes the opposite approach and starts with all the data points in one group and divides that group to create the tree (as if drawing the tree from root to the branches) <span class="citation">(Manning, Raghavan, and Schütze <a href="#ref-0521865719">2008</a>; Boehmke <a href="#ref-cluster">2018</a>)</span>. The advantage of divisive clustering is that it takes into account how the data looks at a global perspective, whereas agglomerative clustering loses that perspective when starting with each data point as an individual <span class="citation">(Boehmke <a href="#ref-cluster">2018</a>)</span>.</p>
+<p>Two of the methods to divide the first group for divisive clustering include k-means and partitioning across medoids (PAM). While there are significant differences between the two methods, the idea is similar in which clusters are created based on the proximity to the closest centroid (mean of a specific cluster of data points) or to the medoid (a data point that is selected as the center of a cluster). The difficulty for either method comes to choosing the value for <span class="math inline">\(k\)</span>, which is the number of clusters that the scientist must assign <em>a priori</em>. There are multiple techniques for deciding <span class="math inline">\(k\)</span>, such as the sum of squares method or the silhouette method.</p>
+<div id="k-means-example" class="section level3">
+<h3><span class="header-section-number">5.3.1</span> K-means example</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">do_kmeans &lt;-<span class="st"> </span><span class="cf">function</span>(df, dist) {
+  df_kmeans &lt;-<span class="st"> </span>df
+  sum_sq &lt;-<span class="st"> </span><span class="kw">c</span>()
+  col_names &lt;-<span class="st"> </span><span class="kw">c</span>()
+  sil_width &lt;-<span class="st"> </span><span class="kw">c</span>()
+  iterations &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">10</span>)
+  
+  <span class="co"># run kmeans</span>
+  <span class="cf">for</span> (i <span class="cf">in</span> iterations) {
+    kmeans_model &lt;-<span class="st"> </span><span class="kw">kmeans</span>(<span class="kw">scale</span>(df), i)
+    
+    col_name &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;cl_kmeans_&quot;</span>, i, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
+    col_names &lt;-<span class="st"> </span><span class="kw">c</span>(col_names, col_name)
+    
+    df_kmeans[, col_name] &lt;-<span class="st"> </span>kmeans_model<span class="op">$</span>cluster
+    sum_sq &lt;-<span class="st"> </span><span class="kw">c</span>(sum_sq, kmeans_model<span class="op">$</span>tot.withinss)
+    
+    sil &lt;-<span class="st"> </span><span class="kw">silhouette</span>(kmeans_model<span class="op">$</span>cluster, dist)
+    sil_width &lt;-<span class="st"> </span><span class="kw">c</span>(sil_width, <span class="kw">summary</span>(sil)<span class="op">$</span>avg.width)
+  }
+  
+  df_kmeans &lt;-<span class="st"> </span>df_kmeans <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">gather_</span>(<span class="st">&quot;k&quot;</span>, <span class="st">&quot;cluster&quot;</span>, col_names) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">k =</span> <span class="kw">gsub</span>(<span class="st">&quot;^cl_kmeans_&quot;</span>, <span class="st">&quot;&quot;</span>, k))
+  
+  <span class="co"># plot clustering</span>
+  p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df_kmeans, <span class="kw">aes</span>(<span class="dt">x =</span> V1, <span class="dt">y =</span> V2, <span class="dt">color =</span> <span class="kw">as.factor</span>(cluster))) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;k-means clustering&quot;</span>,
+         <span class="dt">x =</span> <span class="st">&quot;Axis 1&quot;</span>,
+         <span class="dt">y =</span> <span class="st">&quot;Axis 2&quot;</span>,
+         <span class="dt">color =</span> <span class="st">&quot;Cluster #&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">    </span><span class="co"># scale_color_viridis(discrete = TRUE) +</span>
+<span class="st">    </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(k))
+  
+  <span class="co"># look at sum of squares</span>
+  p2 &lt;-<span class="st"> </span><span class="kw">qplot</span>(<span class="dt">x =</span> iterations, <span class="dt">y =</span> sum_sq) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Which k to pick?&quot;</span>,
+         <span class="dt">subtitle =</span> <span class="st">&quot;Sum of squares method&quot;</span>,
+         <span class="dt">x =</span> <span class="st">&quot;k&quot;</span>,
+         <span class="dt">y =</span> <span class="st">&quot;Total within sum of squares&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme_bw</span>()
+  
+  <span class="kw">return</span>(<span class="kw">list</span>(p, p2))
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rename_pc_df &lt;-<span class="st"> </span><span class="cf">function</span>(df) {
+  df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">select</span>(Axis.<span class="dv">1</span>, Axis.<span class="dv">2</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">rename</span>(<span class="dt">V1 =</span> Axis.<span class="dv">1</span>,
+           <span class="dt">V2 =</span> Axis.<span class="dv">2</span>)
+  
+  <span class="kw">return</span>(df)
+}
+
+graphs &lt;-<span class="st"> </span><span class="kw">do_kmeans</span>(<span class="kw">rename_pc_df</span>(pc_df_uu), uu)
+
+graphs[[<span class="dv">1</span>]]</code></pre></div>
+<div class="figure"><span id="fig:km-ex"></span>
+<img src="final_paper_files/figure-html/km-ex-1.png" alt="Kmeans clustering with different k values" width="672" />
+<p class="caption">
+Figure 5.1: Kmeans clustering with different k values
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">graphs[[<span class="dv">2</span>]]</code></pre></div>
+<div class="figure"><span id="fig:km-ex-ws"></span>
+<img src="final_paper_files/figure-html/km-ex-ws-1.png" alt="Deciding which k to use" width="672" />
+<p class="caption">
+Figure 5.2: Deciding which k to use
+</p>
+</div>
+<p>In Figure <a href="unsup-learn.html#fig:km-ex">5.1</a>, this clustering was done on the same PCoA transformed data for unweighted UniFrac distances between mice. The value of <span class="math inline">\(k\)</span> (indicated by number in the gray bar) was varied and then graphed to show how the clusters appear (each cluster was assigned a number). In Figure <a href="unsup-learn.html#fig:km-ex-ws">5.2</a>, it is possible to use the <code>total within sum of squares</code> measure to determine the best <span class="math inline">\(k\)</span> value. The points dip and start to progress in a flat trajectory around <span class="math inline">\(k=4\)</span>, suggesting that <span class="math inline">\(k=4\)</span> is the best <span class="math inline">\(k\)</span> value for this specific data.</p>
+</div>
+</div>
+<div id="hidden-markov-models-hmm" class="section level2">
+<h2><span class="header-section-number">5.4</span> Hidden Markov models (HMM)</h2>
+<p>A Markov model is a model that describes a system where state transitions are random and are independent of past events <span class="citation">(Rabiner and Juang <a href="#ref-rabiner1986introduction">1986</a>; Sean R Eddy <a href="#ref-eddy2004hidden">2004</a>)</span>. For example, Figure <a href="unsup-learn.html#fig:mm-fig">5.3</a> shows a two state Markov model. From state A, there is a 30% chance of going back to state A or a 70% chance of going to state B regardless of any previous transitions. This simple model can be extended to multiple states with more transition weights. In HMMs, the overall idea is similar but there can also be hidden states and weights. HMMs are commonly used when studying nucleotide or amino acid sequences <span class="citation">(Sean R. Eddy <a href="#ref-eddy1998profile">1998</a>; Sean R Eddy <a href="#ref-eddy2004hidden">2004</a>)</span>. Examples include sequence alignment tools as well as the HMMER program <span class="citation">(Finn, Clements, and Eddy <a href="#ref-finn2011hmmer">2011</a>)</span>, which can take in an amino acid sequence and output proteins that are related to your sequence of interest. Furthermore, HMMs have been used for species-level and even strain-level identification for microbiome studies via the HmmUFOtu program <span class="citation">(Zheng et al. <a href="#ref-zheng2018hmmufotu">2018</a>)</span>, developed here at Penn.</p>
+<div class="figure" style="text-align: center"><span id="fig:mm-fig"></span>
+<img src="fig/mm_fig.png" alt="Simple HMM example" width="35%" />
+<p class="caption">
+Figure 5.3: Simple HMM example
+</p>
+</div>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-buggert2018identification">
+<p>Buggert, Marcus, Son Nguyen, Gonzalo Salgado-Montes de Oca, Bertram Bengsch, Samuel Darko, Amy Ransier, Emily R Roberts, et al. 2018. “Identification and Characterization of Hiv-Specific Resident Memory Cd8+ T Cells in Human Lymphoid Tissue.” <em>Science Immunology</em> 3 (24). Science Immunology: eaar4526.</p>
+</div>
+<div id="ref-byrd2017staphylococcus">
+<p>Byrd, Allyson L, Clay Deming, Sara KB Cassidy, Oliver J Harrison, Weng-Ian Ng, Sean Conlan, Yasmine Belkaid, et al. 2017. “Staphylococcus Aureus and Staphylococcus Epidermidis Strain Diversity Underlying Pediatric Atopic Dermatitis.” <em>Science Translational Medicine</em> 9 (397). American Association for the Advancement of Science: eaal4651.</p>
+</div>
+<div id="ref-cluster">
+<p>Boehmke, Bradley. 2018. “UC Business Analytics R Programming Guide.” <a href="https://uc-r.github.io/hc_clustering#algorithms" class="uri">https://uc-r.github.io/hc_clustering#algorithms</a>.</p>
+</div>
+<div id="ref-0521865719">
+<p>Manning, Christopher D., Prabhakar Raghavan, and Hinrich Schütze. 2008. <em>Introduction to Information Retrieval</em>. Cambridge University Press. <a href="https://www.amazon.com/Introduction-Information-Retrieval-Christopher-Manning/dp/0521865719?SubscriptionId=AKIAIOBINVZYXZQZ2U3A&amp;tag=chimbori05-20&amp;linkCode=xm2&amp;camp=2025&amp;creative=165953&amp;creativeASIN=0521865719" class="uri">https://www.amazon.com/Introduction-Information-Retrieval-Christopher-Manning/dp/0521865719?SubscriptionId=AKIAIOBINVZYXZQZ2U3A&amp;tag=chimbori05-20&amp;linkCode=xm2&amp;camp=2025&amp;creative=165953&amp;creativeASIN=0521865719</a>.</p>
+</div>
+<div id="ref-rabiner1986introduction">
+<p>Rabiner, Lawrence R, and Biing-Hwang Juang. 1986. “An Introduction to Hidden Markov Models.” <em>Ieee Assp Magazine</em> 3 (1). Citeseer: 4–16.</p>
+</div>
+<div id="ref-eddy2004hidden">
+<p>Eddy, Sean R. 2004. “What Is a Hidden Markov Model?” <em>Nature Biotechnology</em> 22 (10). Nature Publishing Group: 1315.</p>
+</div>
+<div id="ref-eddy1998profile">
+<p>Eddy, Sean R. 1998. “Profile Hidden Markov Models.” <em>Bioinformatics (Oxford, England)</em> 14 (9): 755–63.</p>
+</div>
+<div id="ref-finn2011hmmer">
+<p>Finn, Robert D, Jody Clements, and Sean R Eddy. 2011. “HMMER Web Server: Interactive Sequence Similarity Searching.” <em>Nucleic Acids Research</em> 39 (suppl_2). Oxford University Press: W29–W37.</p>
+</div>
+<div id="ref-zheng2018hmmufotu">
+<p>Zheng, Qi, Casey Bartow-McKenney, Jacquelyn S Meisel, and Elizabeth A Grice. 2018. “HmmUFOtu: An Hmm and Phylogenetic Placement Based Ultra-Fast Taxonomic Assignment and Otu Picking Tool for Microbiome Amplicon Sequencing Studies.” <em>Genome Biology</em> 19 (1). BioMed Central: 82.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sup-learn.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="con.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["final_paper.pdf", "final_paper.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

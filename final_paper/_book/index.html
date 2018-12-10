@@ -104,7 +104,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="./">CAMB 698 Final Paper</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preword</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Foreword</a></li>
 <li class="chapter" data-level="2" data-path="bg.html"><a href="bg.html"><i class="fa fa-check"></i><b>2</b> Background</a></li>
 <li class="chapter" data-level="3" data-path="dim-red.html"><a href="dim-red.html"><i class="fa fa-check"></i><b>3</b> Dimensionality reduction</a><ul>
 <li class="chapter" data-level="3.1" data-path="dim-red.html"><a href="dim-red.html#introduction-to-dimensionality-reduction"><i class="fa fa-check"></i><b>3.1</b> Introduction to dimensionality reduction</a></li>
@@ -165,10 +165,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p class="author"><em>Vincent Wu</em></p>
 <p class="date"><em>2018-12-10</em></p>
 </div>
-<div id="preword" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Preword</h1>
+<div id="foreword" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Foreword</h1>
 <p>This book is written and compiled using the <code>bookdown</code> package for the R statistical language. Sections of this book will feature code and graphs produced using R as well. As will be discussed in the next chapter, the purpose of this paper is to introduce and broadly cover common machine learning techniques that are used in the biological sciences. Any included R code is for generating graphs and results to provide additional content in conveying the different techniques. As such, I opted to include the R code as a starting point for any readers who want to explore the techniques.</p>
-<p>The following code in this chapter are needed to load in additional software packages as well as to load in the data that will be used.</p>
+<p>The following code in this chapter are needed to load in additional software packages and to load in the data that will be used in the later chapters.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(usedist)
 <span class="kw">library</span>(qiimer)
@@ -251,6 +251,19 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

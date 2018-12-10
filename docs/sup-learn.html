@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 4 Supervised Learning | Machine Learning for Biological Sciences</title>
+  <meta name="description" content="Final paper for CAMB 698 covering machine learning topics">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 4 Supervised Learning | Machine Learning for Biological Sciences />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Final paper for CAMB 698 covering machine learning topics" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Supervised Learning | Machine Learning for Biological Sciences />
+  
+  <meta name="twitter:description" content="Final paper for CAMB 698 covering machine learning topics" />
+  
+
+<meta name="author" content="Vincent Wu">
+
+
+<meta name="date" content="2018-12-10">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="dim-red.html">
+<link rel="next" href="unsup-learn.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">CAMB 698 Final Paper</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Foreword</a></li>
+<li class="chapter" data-level="2" data-path="bg.html"><a href="bg.html"><i class="fa fa-check"></i><b>2</b> Background</a></li>
+<li class="chapter" data-level="3" data-path="dim-red.html"><a href="dim-red.html"><i class="fa fa-check"></i><b>3</b> Dimensionality reduction</a><ul>
+<li class="chapter" data-level="3.1" data-path="dim-red.html"><a href="dim-red.html#introduction-to-dimensionality-reduction"><i class="fa fa-check"></i><b>3.1</b> Introduction to dimensionality reduction</a></li>
+<li class="chapter" data-level="3.2" data-path="dim-red.html"><a href="dim-red.html#pca-and-pcoa"><i class="fa fa-check"></i><b>3.2</b> PCA and PCoA</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="dim-red.html"><a href="dim-red.html#pcoa-example"><i class="fa fa-check"></i><b>3.2.1</b> PCoA example</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="dim-red.html"><a href="dim-red.html#t-sne"><i class="fa fa-check"></i><b>3.3</b> t-SNE</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="dim-red.html"><a href="dim-red.html#t-sne-example"><i class="fa fa-check"></i><b>3.3.1</b> t-SNE example</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="dim-red.html"><a href="dim-red.html#other-dimensionality-reduction-techniques"><i class="fa fa-check"></i><b>3.4</b> Other dimensionality reduction techniques</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="sup-learn.html"><a href="sup-learn.html"><i class="fa fa-check"></i><b>4</b> Supervised Learning</a><ul>
+<li class="chapter" data-level="4.1" data-path="sup-learn.html"><a href="sup-learn.html#introduction-to-supervised-learning"><i class="fa fa-check"></i><b>4.1</b> Introduction to supervised learning</a></li>
+<li class="chapter" data-level="4.2" data-path="sup-learn.html"><a href="sup-learn.html#regressions"><i class="fa fa-check"></i><b>4.2</b> Regressions</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="sup-learn.html"><a href="sup-learn.html#linear-regression-example"><i class="fa fa-check"></i><b>4.2.1</b> Linear regression example</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="sup-learn.html"><a href="sup-learn.html#k-nearest-neighbors-knn"><i class="fa fa-check"></i><b>4.3</b> K-nearest neighbors (KNN)</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="sup-learn.html"><a href="sup-learn.html#knn-example"><i class="fa fa-check"></i><b>4.3.1</b> KNN example</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="sup-learn.html"><a href="sup-learn.html#decision-trees"><i class="fa fa-check"></i><b>4.4</b> Decision trees</a></li>
+<li class="chapter" data-level="4.5" data-path="sup-learn.html"><a href="sup-learn.html#random-forests"><i class="fa fa-check"></i><b>4.5</b> Random forests</a></li>
+<li class="chapter" data-level="4.6" data-path="sup-learn.html"><a href="sup-learn.html#neural-networks-nn"><i class="fa fa-check"></i><b>4.6</b> Neural networks (NN)</a></li>
+<li class="chapter" data-level="4.7" data-path="sup-learn.html"><a href="sup-learn.html#support-vector-machines-svm"><i class="fa fa-check"></i><b>4.7</b> Support vector machines (SVM)</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="sup-learn.html"><a href="sup-learn.html#svm-example"><i class="fa fa-check"></i><b>4.7.1</b> SVM example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="unsup-learn.html"><a href="unsup-learn.html"><i class="fa fa-check"></i><b>5</b> Unsupervised Learning</a><ul>
+<li class="chapter" data-level="5.1" data-path="unsup-learn.html"><a href="unsup-learn.html#introduction-to-unsupervised-learning"><i class="fa fa-check"></i><b>5.1</b> Introduction to unsupervised learning</a></li>
+<li class="chapter" data-level="5.2" data-path="unsup-learn.html"><a href="unsup-learn.html#hierarchical-agglomerative-clustering"><i class="fa fa-check"></i><b>5.2</b> Hierarchical agglomerative clustering</a></li>
+<li class="chapter" data-level="5.3" data-path="unsup-learn.html"><a href="unsup-learn.html#hierarchical-divisive-clustering"><i class="fa fa-check"></i><b>5.3</b> Hierarchical divisive clustering</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="unsup-learn.html"><a href="unsup-learn.html#k-means-example"><i class="fa fa-check"></i><b>5.3.1</b> K-means example</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="unsup-learn.html"><a href="unsup-learn.html#hidden-markov-models-hmm"><i class="fa fa-check"></i><b>5.4</b> Hidden Markov models (HMM)</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="con.html"><a href="con.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Machine Learning for Biological Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sup_learn" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Supervised Learning</h1>
+<div id="introduction-to-supervised-learning" class="section level2">
+<h2><span class="header-section-number">4.1</span> Introduction to supervised learning</h2>
+<p>This section covers supervised learning techniques – where the output variables are already known. While there are many techniques available, this paper will cover (1) regressions (multiple linear vs logistic vs multinomial), (2) K-nearest neighbors, (3) decision trees, (4) random forests, (5) deep learning, and (6) support vector machines. All of these methods can be found in biomedical research papers, especially those involving microbiome and next-generation sequencing data. Some of these methods will include the code implementation, whereas others will have only a description due to either data or paper restraints.</p>
+</div>
+<div id="regressions" class="section level2">
+<h2><span class="header-section-number">4.2</span> Regressions</h2>
+<p>Regression is one of the simple (but still powerful) forms of supervised learning. In brief, regression is an attempt to understand the relationship between the input and output <span class="citation">(Shalizi <a href="#ref-shalizi">2018</a>)</span>. A linear regression (commonly seen in papers with a plot, a regression line, a <span class="math inline">\(r^2\)</span> value, and a p-value) establishes a line with the lowest mean squared error (distance between the data points and the line). The <span class="math inline">\(r^2\)</span> value, also known as the coefficient of determination, describes how much of the variation in the output (typically the y-axis variable) is explained by the input (typically the x-axis variable). As mentioned in the background, the bias-variance tradeoff plays a role here as the ability to predict an output is determined by the mean squared error (or an equivalent measure) <span class="citation">(Shalizi <a href="#ref-shalizi">2018</a>)</span>.</p>
+<div id="linear-regression-example" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Linear regression example</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aa &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;data/aa.rds&quot;</span>)
+mice &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;data/mice.rds&quot;</span>)
+
+lr_df &lt;-<span class="st"> </span>aa <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(Tissue <span class="op">==</span><span class="st"> &quot;Stool&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(MouseID, Tissue, Metabolite, ConcentrationNZ)
+
+lr_his_df &lt;-<span class="st"> </span>lr_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(Metabolite <span class="op">==</span><span class="st"> &quot;Glycine&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Glycine =</span> ConcentrationNZ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(MouseID, Tissue, Glycine) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y =</span> <span class="ot">NA</span>,
+         <span class="dt">meta_comp =</span> <span class="ot">NA</span>)
+
+lr_g_df &lt;-<span class="st"> </span>lr_his_df
+
+lr_df &lt;-<span class="st"> </span>lr_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(Metabolite <span class="op">!=</span><span class="st"> &quot;Glycine&quot;</span>)
+
+uniq_meta &lt;-<span class="st"> </span><span class="kw">unique</span>(lr_df<span class="op">$</span>Metabolite)
+<span class="cf">for</span> (m <span class="cf">in</span> uniq_meta) {
+  df &lt;-<span class="st"> </span>lr_df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(Metabolite <span class="op">==</span><span class="st"> </span>m) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">Glycine =</span> lr_his_df<span class="op">$</span>Glycine,
+           <span class="dt">y =</span> ConcentrationNZ,
+           <span class="dt">meta_comp =</span> Metabolite) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">select</span>(., <span class="op">-</span>ConcentrationNZ, <span class="op">-</span>Metabolite)
+  
+  lr_g_df &lt;-<span class="st"> </span><span class="kw">rbind</span>(lr_g_df, df)
+}
+
+lr_g_df &lt;-<span class="st"> </span>lr_g_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(meta_comp))
+
+<span class="kw">ggplot</span>(lr_g_df, <span class="kw">aes</span>(<span class="dt">x =</span> Glycine, <span class="dt">y =</span> y)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.75</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Amino acid comparisons in stool&quot;</span>,
+    <span class="dt">subtitle =</span> <span class="st">&quot;Glycine concentration vs other amino acids&quot;</span>,
+    <span class="dt">x =</span> <span class="st">&quot;Glycine concentration&quot;</span>,
+    <span class="dt">y =</span> <span class="st">&quot;Other amino acid concentration&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>meta_comp, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:linreg-ex"></span>
+<img src="final_paper_files/figure-html/linreg-ex-1.png" alt="Linear regression example" width="672" />
+<p class="caption">
+Figure 4.1: Linear regression example
+</p>
+</div>
+<p>In Figure <a href="sup-learn.html#fig:linreg-ex">4.1</a>, metabolomic data was used due to the restraints inherent to regression functions. Amino acid concentrations were measured from stool samples. Glycine concentrations were then compared with the other amino acids and a linear regression line was drawn. From looking at how well the lines can represent the data points, this graph is meant to demonstrate that some data, but not all, may work well with a linear regression model. Even though linear regression may be simple, it can be useful (i.e. for the relationship between glycine and lycine) or not as informative (i.e. for the relationship between glycine and histidine).</p>
+<p>There are many types of regressions that are extensions of linear regression<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>. For instance, a multilinear regression factors in more than one input variable to predict an output variable. Logistic regression is common in the biological sciences when trying to analyze a dependent variable that has a binary output (i.e. <span class="math inline">\(y = 0\)</span> or <span class="math inline">\(y = 1\)</span>) <span class="citation">(Shalizi <a href="#ref-shalizi">2018</a>)</span>. This type of regression calculates the probability of <span class="math inline">\(y = 1\)</span>, as a function of the independent variables. As such, a probability of greater or equal to 0.5 will result in a prediction that <span class="math inline">\(y = 1\)</span>, otherwise it will predict <span class="math inline">\(y = 0\)</span>. Multinomial regression (also known as polytomous regression) builds on the same principles as logistic regression. The main difference is that multinomial regression works for a dependent variable that has more than two categories (i.e. <span class="math inline">\(y = 0\)</span>, <span class="math inline">\(y = 1\)</span>, or <span class="math inline">\(y = 2\)</span>).</p>
+</div>
+</div>
+<div id="k-nearest-neighbors-knn" class="section level2">
+<h2><span class="header-section-number">4.3</span> K-nearest neighbors (KNN)</h2>
+<p>KNN is a type of regression which takes into the account the distance between points, hence its name <span class="citation">(Shalizi <a href="#ref-shalizi">2018</a>)</span>. This algorithm calculates the distance between data points and a new data point of interest (will be referred to as the query) to predict its classification <span class="citation">(O. Harrison <a href="#ref-knn">2018</a>)</span>. Of the <span class="math inline">\(k\)</span> (a positive integer that is less than the number of original data points) data points that are closest to the query, the algorithm will then return the mode or mean of the classifications of those data points (which is already known) <span class="citation">(O. Harrison <a href="#ref-knn">2018</a>)</span>. The thought is that the samples with the closest distances to the query are likely to have the same classification, which would be the predicted output for the query <span class="citation">(O. Harrison <a href="#ref-knn">2018</a>)</span>. KNN falls under the category of a linear smoother in creating a regression curve that is smooth and close to the actual mean, when <span class="math inline">\(k\)</span> is increased <span class="citation">(Shalizi <a href="#ref-shalizi">2018</a>)</span>. The choosing of <span class="math inline">\(k\)</span> for optimal KNN performance is important due to the bias-variance tradeoff but will not be discussed in this paper due to paper length restraints <span class="citation">(Shalizi <a href="#ref-shalizi">2018</a>)</span>.</p>
+<div id="knn-example" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> KNN example</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knn_df &lt;-<span class="st"> </span>pc_df_uu <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(Vendor, Axis.<span class="dv">1</span>, Axis.<span class="dv">2</span>)
+
+run_knn &lt;-<span class="st"> </span><span class="cf">function</span>(k) {
+  res &lt;-<span class="st"> </span><span class="kw">c</span>()
+  
+  <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>)) {
+    df &lt;-<span class="st"> </span>knn_df <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">mutate</span>(<span class="dt">trial =</span> <span class="kw">sample</span>(<span class="dv">2</span>, <span class="kw">n</span>(), <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> <span class="kw">c</span>(<span class="fl">0.67</span>, <span class="fl">0.33</span>)))
+  
+    knn_train &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">filter</span>(trial <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)
+    
+    knn_test &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">filter</span>(trial <span class="op">==</span><span class="st"> </span><span class="dv">2</span>)
+    
+    knn_prd &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> knn_train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(., <span class="op">-</span>Vendor),
+                   <span class="dt">test =</span> knn_test <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(., <span class="op">-</span>Vendor),
+                   <span class="dt">cl =</span> knn_train<span class="op">$</span>Vendor,
+                   <span class="dt">k =</span> k)
+    
+    prop &lt;-<span class="st"> </span><span class="kw">sum</span>((knn_test<span class="op">$</span>Vendor <span class="op">==</span><span class="st"> </span>knn_prd) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>,
+                <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(knn_prd)
+    res &lt;-<span class="st"> </span><span class="kw">c</span>(res, prop)
+  }
+  
+  <span class="kw">return</span>(res)
+}
+
+res_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">k =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">3</span>, <span class="dv">100</span>), <span class="kw">rep</span>(<span class="dv">4</span>, <span class="dv">100</span>), <span class="kw">rep</span>(<span class="dv">5</span>, <span class="dv">100</span>)),
+                     <span class="dt">accuracy =</span> <span class="kw">c</span>(<span class="kw">run_knn</span>(<span class="dv">3</span>),
+                                  <span class="kw">run_knn</span>(<span class="dv">4</span>),
+                                  <span class="kw">run_knn</span>(<span class="dv">5</span>)))
+
+<span class="kw">ggplot</span>(res_df, <span class="kw">aes</span>(<span class="dt">x =</span> accuracy, <span class="dt">fill =</span> <span class="kw">as.factor</span>(k), <span class="dt">color =</span> <span class="kw">as.factor</span>(k))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">alpha =</span> <span class="fl">0.6</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;KNN Regression with Varied k values&quot;</span>,
+       <span class="dt">color =</span> <span class="st">&quot;k value&quot;</span>,
+       <span class="dt">fill =</span> <span class="st">&quot;k value&quot;</span>,
+       <span class="dt">x =</span> <span class="st">&quot;Prediction accuracy&quot;</span>,
+       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="figure"><span id="fig:knn-ex"></span>
+<img src="final_paper_files/figure-html/knn-ex-1.png" alt="KNN example" width="672" />
+<p class="caption">
+Figure 4.2: KNN example
+</p>
+</div>
+<p>In Figure <a href="sup-learn.html#fig:knn-ex">4.2</a>, the KNN method was applied to the PCoA transformed data points (as seen in Figure <a href="dim-red.html#fig:pcoa-ex">3.1</a>). The data was split into a training and a testing dataset in order to see how well the KNN could predict vendor with different values of <span class="math inline">\(k\)</span>. The graph demonstrates how different values of <span class="math inline">\(k\)</span> can impact prediction accuracy.</p>
+</div>
+</div>
+<div id="decision-trees" class="section level2">
+<h2><span class="header-section-number">4.4</span> Decision trees</h2>
+<p>Decision trees fall into the category of nonparametric supervised learning methods, meaning that it does not depend on the distribution of the variables. In brief, decision trees separate the data based on different variables and construct a tree for predicting the final classification. The algorithm aims to create the smallest tree (requires the least number of variables) that increases information gain (selecting variables that can split the data into two subsets that are individually homogenous) <span class="citation">(Sehra <a href="#ref-dt">2018</a>)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aa_dt_df &lt;-<span class="st"> </span>lr_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(<span class="kw">select</span>(mice, MouseID, Vendor), <span class="dt">by =</span> <span class="st">&quot;MouseID&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Metabolite =</span> <span class="kw">gsub</span>(<span class="st">&quot;[/ ]&quot;</span>, <span class="st">&quot;_&quot;</span>, Metabolite)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spread</span>(Metabolite, ConcentrationNZ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Vendor =</span> <span class="kw">as.factor</span>(Vendor))
+
+aa_lbls &lt;-<span class="st"> </span><span class="kw">colnames</span>(aa_dt_df)[<span class="dv">5</span><span class="op">:</span><span class="kw">length</span>(aa_dt_df)]
+
+tree_fm &lt;-<span class="st"> </span><span class="kw">as.formula</span>(<span class="kw">paste</span>(<span class="st">&quot;Vendor ~ &quot;</span>, <span class="kw">paste</span>(aa_lbls, <span class="dt">collapse =</span> <span class="st">&quot; + &quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))
+
+tree_res &lt;-<span class="st"> </span><span class="kw">tree</span>(tree_fm, <span class="dt">data =</span> aa_dt_df)
+
+<span class="kw">plot</span>(tree_res)
+<span class="kw">text</span>(tree_res)</code></pre></div>
+<div class="figure"><span id="fig:dt-ex"></span>
+<img src="final_paper_files/figure-html/dt-ex-1.png" alt="Decision tree example using amino acid concentrations to predict vendor" width="672" />
+<p class="caption">
+Figure 4.3: Decision tree example using amino acid concentrations to predict vendor
+</p>
+</div>
+<p>In Figure <a href="sup-learn.html#fig:dt-ex">4.3</a>, the decision tree method was applied to the metabolite dataset (as seen in Figure <a href="sup-learn.html#fig:linreg-ex">4.1</a>). All the amino acids detected were used to try to classify the samples by vendor. As seen in the result, isoleucine levels <span class="math inline">\(\geq\)</span> 23.85 can predict samples from TAC. Proceeding down the decision tree can further separate the samples by using lysine levels.</p>
+</div>
+<div id="random-forests" class="section level2">
+<h2><span class="header-section-number">4.5</span> Random forests</h2>
+<p>This method is an extension of decision trees with the same aim of predicting the final classification for a data point <span class="citation">(Breiman <a href="#ref-breiman2001random">2001</a>; Liaw, Wiener, and others <a href="#ref-liaw2002classification">2002</a>)</span>. The algorithm starts by randomly grabbing a chunk of data from the dataset (called the training data) and creating a single decision tree. It will then test the accuracy of that tree by using it on the data that was not initially used for constructing the tree. The algorithm then repeats this process by grabbing another random chunk of data and constructing another tree. By repeating this process multiple times, the algorithm will create a large number of decision trees, hence the term random forests. Once a random forest is established, the trees will take in new data and will each generate their own prediction of what the classification is. The algorithm will select the most common classification and return that as the predicted classification for the new data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">forest_res &lt;-<span class="st"> </span><span class="kw">randomForest</span>(tree_fm, <span class="dt">data =</span> aa_dt_df)
+
+<span class="kw">importance</span>(forest_res)</code></pre></div>
+<pre><code>##                          MeanDecreaseGini
+## Arginine                       0.52426159
+## Asparagine_Aspartic_Acid       0.48782994
+## Cysteine                       0.08388865
+## Glutamine_Glutamic_Acid        0.79407455
+## Histidine                      0.10707186
+## Isoleucine                     1.33005098
+## Leucine                        0.90613227
+## Lysine                         1.01425911
+## Methionine                     1.16218851
+## Phenylalanine                  0.97286201
+## Proline                        0.54284661
+## Serine                         0.63527573
+## Threonine                      0.73175700
+## Tyrosine                       1.23192239
+## Valine                         0.75157881</code></pre>
+<p>The output of random forests includes its ability to accurately predict the samples as well as the relative importance of the independent variables used to construct the forest. Isoleucine is identified as an important separator, which supports the finding in Figure <a href="sup-learn.html#fig:dt-ex">4.3</a>.</p>
+</div>
+<div id="neural-networks-nn" class="section level2">
+<h2><span class="header-section-number">4.6</span> Neural networks (NN)</h2>
+<p>NN and the field of deep learning, like many of the methods mentioned here, are topics that can each be written about in their own paper (or book) <span class="citation">(Goodfellow, Bengio, and Courville <a href="#ref-Goodfellow-et-al-2016">2016</a>)</span>. This subsection only serves to briefly introduce this and include resources for further exploration. NNs, in short, aim to mimic how neurons act<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>. The input of data (analogous to neurotransmitters) results in an output (analogous to whether or not the neuron fires). The beauty of neural networks lies within its name, where multiple layers of neurons are connected with each other. NNs have impressive predictive capabilities by learning from vast amounts of data. For instance, NNs can be trained to recognize objects in pictures, to recognize handwriting, and other tasks that strike at the core of deep learning <span class="citation">(Nielsen <a href="#ref-Nielsen-2015">2015</a>; Goodfellow, Bengio, and Courville <a href="#ref-Goodfellow-et-al-2016">2016</a>)</span>. NN are increasingly present in the biological sciences as research groups contribute towards large and accessible databases, which present prime opportunities for the development of neural networks to predict outputs such as treatment outcomes <span class="citation">(Snow, Smith, and Catalona <a href="#ref-snow1994artificial">1994</a>; Kappen and Neijt <a href="#ref-kappen1993neural">1993</a>)</span> and diagnoses <span class="citation">(Ercal et al. <a href="#ref-ercal1994neural">1994</a>; Acharya et al. <a href="#ref-acharya2018deep">2018</a>; Esteva et al. <a href="#ref-esteva2017dermatologist">2017</a>)</span>.</p>
+</div>
+<div id="support-vector-machines-svm" class="section level2">
+<h2><span class="header-section-number">4.7</span> Support vector machines (SVM)</h2>
+<p>SVM is a popular method <span class="citation">(Furey et al. <a href="#ref-furey2000support">2000</a>; Guyon et al. <a href="#ref-guyon2002gene">2002</a>)</span> used for classification in the biological sciences because of its ability to deal with high dimensional data and to look at non-linear relationships. This method searches for a hyperplane (in 2D: a line; in 3D: a plane, etc.) that can separate the data points, which is determined by having the largest average distance from each of the data points to the hyperplane <span class="citation">(Le <a href="#ref-svmdata">2018</a>)</span>. SVM employs a method called a kernel trick<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> to perceive data points in different dimensional space in order to find the best hyperplane <span class="citation">(Le <a href="#ref-svmdata">2018</a>)</span>. After a hyperplane is identified, new data points can be classified by which side they fall on the hyperplane.</p>
+<div id="svm-example" class="section level3">
+<h3><span class="header-section-number">4.7.1</span> SVM example</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">svm_df &lt;-<span class="st"> </span>pc_df_uu <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(Vendor, Axis.<span class="dv">1</span>, Axis.<span class="dv">2</span>)
+
+<span class="co"># get best model on cost</span>
+model_svms &lt;-<span class="st"> </span><span class="kw">tune</span>(svm,
+                   <span class="kw">as.factor</span>(Vendor) <span class="op">~</span><span class="st"> </span>.,
+                   <span class="dt">data =</span> svm_df,
+                   <span class="dt">kernel =</span> <span class="st">&quot;radial&quot;</span>,
+                   <span class="dt">ranges =</span> <span class="kw">list</span>(<span class="dt">cost =</span> <span class="kw">c</span>(<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">100</span>)))
+
+<span class="co"># get parameters for best model</span>
+best_svm &lt;-<span class="st"> </span>model_svms<span class="op">$</span>best.model
+
+<span class="co"># predict based on SVM and plot</span>
+pred &lt;-<span class="st"> </span><span class="kw">predict</span>(best_svm, svm_df, <span class="dt">decision.values =</span> <span class="ot">TRUE</span>)
+<span class="kw">plot</span>(best_svm, svm_df)</code></pre></div>
+<div class="figure"><span id="fig:svm-ex"></span>
+<img src="final_paper_files/figure-html/svm-ex-1.png" alt="SVM classification of unweighted UniFrac distances" width="672" />
+<p class="caption">
+Figure 4.4: SVM classification of unweighted UniFrac distances
+</p>
+</div>
+<p>In Figure <a href="sup-learn.html#fig:svm-ex">4.4</a>, SVM was applied to the PCoA transformed dataset (as seen in Figure <a href="dim-red.html#fig:pcoa-ex">3.1</a>). If the data points from Figure <a href="dim-red.html#fig:pcoa-ex">3.1</a> are mirrored and then rotated, the points will be the same as seen here in Figure <a href="sup-learn.html#fig:svm-ex">4.4</a>. Based on the shading, it is interesting to note how SVM can demarcate areas associated with different vendors in the PCoA space. These boundaries are effective, at least for this dataset, in classifying the samples by the correct vendor.</p>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-shalizi">
+<p>Shalizi, Cosma Rohilla. 2018. <em>Advanced Data Analysis from an Elementary Point of View</em>. Pittsburgh, PA: Carnegie Mellon University. <a href="http://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/" class="uri">http://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/</a>.</p>
+</div>
+<div id="ref-knn">
+<p>Harrison, Onel. 2018. “Machine Learning Basics with the K-Nearest Neighbors Algorithm.” <a href="https://towardsdatascience.com/machine-learning-basics-with-the-k-nearest-neighbors-algorithm-6a6e71d01761" class="uri">https://towardsdatascience.com/machine-learning-basics-with-the-k-nearest-neighbors-algorithm-6a6e71d01761</a>.</p>
+</div>
+<div id="ref-dt">
+<p>Sehra, Chirag. 2018. “Decision Trees Explained Easily.” Medium. <a href="https://medium.com/@chiragsehra42/decision-trees-explained-easily-28f23241248" class="uri">https://medium.com/@chiragsehra42/decision-trees-explained-easily-28f23241248</a>.</p>
+</div>
+<div id="ref-breiman2001random">
+<p>Breiman, Leo. 2001. “Random Forests.” <em>Machine Learning</em> 45 (1). Springer: 5–32.</p>
+</div>
+<div id="ref-liaw2002classification">
+<p>Liaw, Andy, Matthew Wiener, and others. 2002. “Classification and Regression by randomForest.” <em>R News</em> 2 (3): 18–22.</p>
+</div>
+<div id="ref-Goodfellow-et-al-2016">
+<p>Goodfellow, Ian, Yoshua Bengio, and Aaron Courville. 2016. <em>Deep Learning</em>. MIT Press.</p>
+</div>
+<div id="ref-Nielsen-2015">
+<p>Nielsen, Michael A. 2015. <em>Neural Networks and Deep Learning</em>. Determination Press.</p>
+</div>
+<div id="ref-snow1994artificial">
+<p>Snow, Peter B, Deborah S Smith, and William J Catalona. 1994. “Artificial Neural Networks in the Diagnosis and Prognosis of Prostate Cancer: A Pilot Study.” <em>The Journal of Urology</em> 152 (5). Elsevier: 1923–6.</p>
+</div>
+<div id="ref-kappen1993neural">
+<p>Kappen, HJ, and JP Neijt. 1993. “Neural Network Analysis to Predict Treatment Outcome.” <em>Annals of Oncology</em> 4 (suppl_4). Oxford University Press: S31–S34.</p>
+</div>
+<div id="ref-ercal1994neural">
+<p>Ercal, Fikret, Anurag Chawla, William V Stoecker, Hsi-Chieh Lee, and Randy H Moss. 1994. “Neural Network Diagnosis of Malignant Melanoma from Color Images.” <em>IEEE Transactions on Biomedical Engineering</em> 41 (9). IEEE: 837–45.</p>
+</div>
+<div id="ref-acharya2018deep">
+<p>Acharya, U Rajendra, Shu Lih Oh, Yuki Hagiwara, Jen Hong Tan, and Hojjat Adeli. 2018. “Deep Convolutional Neural Network for the Automated Detection and Diagnosis of Seizure Using Eeg Signals.” <em>Computers in Biology and Medicine</em> 100. Elsevier: 270–78.</p>
+</div>
+<div id="ref-esteva2017dermatologist">
+<p>Esteva, Andre, Brett Kuprel, Roberto A Novoa, Justin Ko, Susan M Swetter, Helen M Blau, and Sebastian Thrun. 2017. “Dermatologist-Level Classification of Skin Cancer with Deep Neural Networks.” <em>Nature</em> 542 (7639). Nature Publishing Group: 115.</p>
+</div>
+<div id="ref-furey2000support">
+<p>Furey, Terrence S, Nello Cristianini, Nigel Duffy, David W Bednarski, Michel Schummer, and David Haussler. 2000. “Support Vector Machine Classification and Validation of Cancer Tissue Samples Using Microarray Expression Data.” <em>Bioinformatics</em> 16 (10). Oxford University Press: 906–14.</p>
+</div>
+<div id="ref-guyon2002gene">
+<p>Guyon, Isabelle, Jason Weston, Stephen Barnhill, and Vladimir Vapnik. 2002. “Gene Selection for Cancer Classification Using Support Vector Machines.” <em>Machine Learning</em> 46 (1-3). Springer: 389–422.</p>
+</div>
+<div id="ref-svmdata">
+<p>Le, James. 2018. “Support Vector Machines in R.” <a href="https://www.datacamp.com/community/tutorials/support-vector-machines-r" class="uri">https://www.datacamp.com/community/tutorials/support-vector-machines-r</a>.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>A useful resource for understanding regressions and other statistical topics is Pennsylvania State University’s online documentation for their statistic courses. For example, STAT 504 covers multinomial logistic regression and can be found at this link (<a href="https://onlinecourses.science.psu.edu/stat504/node/172/" class="uri">https://onlinecourses.science.psu.edu/stat504/node/172/</a>).<a href="sup-learn.html#fnref1">↩</a></p></li>
+<li id="fn2"><p>The developers of a software package called TensorFlow (an open-source package for running neural networks) have also created an interactive simulation of neural networks at this link ((<a href="https://playground.tensorflow.org/" class="uri">https://playground.tensorflow.org/</a>)).<a href="sup-learn.html#fnref2">↩</a></p></li>
+<li id="fn3"><p>This post ((<a href="https://stats.stackexchange.com/questions/152897/how-to-intuitively-explain-what-a-kernel-is" class="uri">https://stats.stackexchange.com/questions/152897/how-to-intuitively-explain-what-a-kernel-is</a>)) offers an explanation about how kernel tricks work.<a href="sup-learn.html#fnref3">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="dim-red.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="unsup-learn.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["final_paper.pdf", "final_paper.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

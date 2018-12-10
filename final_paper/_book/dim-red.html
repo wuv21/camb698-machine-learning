@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 3 Dimensionality reduction | Machine Learning for Biological Sciences</title>
+  <meta name="description" content="Final paper for CAMB 698 covering machine learning topics">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 3 Dimensionality reduction | Machine Learning for Biological Sciences />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Final paper for CAMB 698 covering machine learning topics" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Dimensionality reduction | Machine Learning for Biological Sciences />
+  
+  <meta name="twitter:description" content="Final paper for CAMB 698 covering machine learning topics" />
+  
+
+<meta name="author" content="Vincent Wu">
+
+
+<meta name="date" content="2018-12-10">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="bg.html">
+<link rel="next" href="sup-learn.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">CAMB 698 Final Paper</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Foreword</a></li>
+<li class="chapter" data-level="2" data-path="bg.html"><a href="bg.html"><i class="fa fa-check"></i><b>2</b> Background</a></li>
+<li class="chapter" data-level="3" data-path="dim-red.html"><a href="dim-red.html"><i class="fa fa-check"></i><b>3</b> Dimensionality reduction</a><ul>
+<li class="chapter" data-level="3.1" data-path="dim-red.html"><a href="dim-red.html#introduction-to-dimensionality-reduction"><i class="fa fa-check"></i><b>3.1</b> Introduction to dimensionality reduction</a></li>
+<li class="chapter" data-level="3.2" data-path="dim-red.html"><a href="dim-red.html#pca-and-pcoa"><i class="fa fa-check"></i><b>3.2</b> PCA and PCoA</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="dim-red.html"><a href="dim-red.html#pcoa-example"><i class="fa fa-check"></i><b>3.2.1</b> PCoA example</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="dim-red.html"><a href="dim-red.html#t-sne"><i class="fa fa-check"></i><b>3.3</b> t-SNE</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="dim-red.html"><a href="dim-red.html#t-sne-example"><i class="fa fa-check"></i><b>3.3.1</b> t-SNE example</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="dim-red.html"><a href="dim-red.html#other-dimensionality-reduction-techniques"><i class="fa fa-check"></i><b>3.4</b> Other dimensionality reduction techniques</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="sup-learn.html"><a href="sup-learn.html"><i class="fa fa-check"></i><b>4</b> Supervised Learning</a><ul>
+<li class="chapter" data-level="4.1" data-path="sup-learn.html"><a href="sup-learn.html#introduction-to-supervised-learning"><i class="fa fa-check"></i><b>4.1</b> Introduction to supervised learning</a></li>
+<li class="chapter" data-level="4.2" data-path="sup-learn.html"><a href="sup-learn.html#regressions"><i class="fa fa-check"></i><b>4.2</b> Regressions</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="sup-learn.html"><a href="sup-learn.html#linear-regression-example"><i class="fa fa-check"></i><b>4.2.1</b> Linear regression example</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="sup-learn.html"><a href="sup-learn.html#k-nearest-neighbors-knn"><i class="fa fa-check"></i><b>4.3</b> K-nearest neighbors (KNN)</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="sup-learn.html"><a href="sup-learn.html#knn-example"><i class="fa fa-check"></i><b>4.3.1</b> KNN example</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="sup-learn.html"><a href="sup-learn.html#decision-trees"><i class="fa fa-check"></i><b>4.4</b> Decision trees</a></li>
+<li class="chapter" data-level="4.5" data-path="sup-learn.html"><a href="sup-learn.html#random-forests"><i class="fa fa-check"></i><b>4.5</b> Random forests</a></li>
+<li class="chapter" data-level="4.6" data-path="sup-learn.html"><a href="sup-learn.html#neural-networks-nn"><i class="fa fa-check"></i><b>4.6</b> Neural networks (NN)</a></li>
+<li class="chapter" data-level="4.7" data-path="sup-learn.html"><a href="sup-learn.html#support-vector-machines-svm"><i class="fa fa-check"></i><b>4.7</b> Support vector machines (SVM)</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="sup-learn.html"><a href="sup-learn.html#svm-example"><i class="fa fa-check"></i><b>4.7.1</b> SVM example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="unsup-learn.html"><a href="unsup-learn.html"><i class="fa fa-check"></i><b>5</b> Unsupervised Learning</a><ul>
+<li class="chapter" data-level="5.1" data-path="unsup-learn.html"><a href="unsup-learn.html#introduction-to-unsupervised-learning"><i class="fa fa-check"></i><b>5.1</b> Introduction to unsupervised learning</a></li>
+<li class="chapter" data-level="5.2" data-path="unsup-learn.html"><a href="unsup-learn.html#hierarchical-agglomerative-clustering"><i class="fa fa-check"></i><b>5.2</b> Hierarchical agglomerative clustering</a></li>
+<li class="chapter" data-level="5.3" data-path="unsup-learn.html"><a href="unsup-learn.html#hierarchical-divisive-clustering"><i class="fa fa-check"></i><b>5.3</b> Hierarchical divisive clustering</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="unsup-learn.html"><a href="unsup-learn.html#k-means-example"><i class="fa fa-check"></i><b>5.3.1</b> K-means example</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="unsup-learn.html"><a href="unsup-learn.html#hidden-markov-models-hmm"><i class="fa fa-check"></i><b>5.4</b> Hidden Markov models (HMM)</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="con.html"><a href="con.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Machine Learning for Biological Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="dim_red" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Dimensionality reduction</h1>
+<div id="introduction-to-dimensionality-reduction" class="section level2">
+<h2><span class="header-section-number">3.1</span> Introduction to dimensionality reduction</h2>
+<p>Dimensionality reduction is a necessary tool for working with high-dimensional data, which can be seen from this dataset. Each of the diversity distances against each of the mice is a single variable, as is each of the relative abundances for different species. A variable is a dimension in this scenario – creating a dataset with high dimensionality. While rich and informative, this dataset would be difficult to visualize beyond two dimensions. Without going too far into the mathematics behind these methods, dimensionality reduction creates a means to observe the data from a different perspective and assists in reducing the computational burden for the machine learning techniques that will be discussed.</p>
+</div>
+<div id="pca-and-pcoa" class="section level2">
+<h2><span class="header-section-number">3.2</span> PCA and PCoA</h2>
+<p>Principal components analysis (PCA) and principal coordinates analysis (PCoA) are common techniques used both in and outside of the biological sciences. PCA makes new variables that are linear combinations of the original variables <span class="citation">(Shalizi <a href="#ref-shalizi">2018</a>)</span>. PCoA is similar in concept but takes in a distance matrix (such as the one used for our dataset) to transform into new coordinates where the axes of this coordinate system are not correlated with each other. The power of PCA and PCoA is that all new variables have no correlation with each other and can explain all the covariance from the original data. The data points in PCA or PCoA space can be easily visualized as seen in Figure <a href="dim-red.html#fig:pcoa-ex">3.1</a>. It is common to display the variance explained by each of the principal component axes as a means to show how well the principal components can explain the variance in the original data.</p>
+<div id="pcoa-example" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> PCoA example</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## this code was modified from Kyle Bittinger&#39;s code
+
+<span class="co"># get unweighted unifrac distances</span>
+uu &lt;-<span class="st"> </span><span class="kw">dist_subset</span>(uu, s_vendor<span class="op">$</span>SampleID)
+
+<span class="co"># run pcoa</span>
+pc &lt;-<span class="st"> </span><span class="kw">pcoa</span>(uu)
+
+<span class="co"># create dataframe for ggplot2</span>
+pc_df_uu &lt;-<span class="st"> </span><span class="kw">cbind</span>(s_vendor, pc<span class="op">$</span>vectors[s_vendor<span class="op">$</span>SampleID, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])
+
+<span class="co"># calculate variance coverage by axis</span>
+pc_pct &lt;-<span class="st"> </span><span class="kw">round</span>(pc<span class="op">$</span>values<span class="op">$</span>Relative_eig <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)
+
+<span class="co"># finish setting up dataframe</span>
+pc_df_uu &lt;-<span class="st"> </span>pc_df_uu <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Label =</span> <span class="kw">ifelse</span>(SampleID <span class="op">%in%</span><span class="st"> </span>suspect_SampleIDs, SampleID, <span class="st">&quot;&quot;</span>))
+
+<span class="co"># make fig</span>
+<span class="kw">ggplot</span>(pc_df_uu, <span class="kw">aes</span>(<span class="dt">x =</span> Axis.<span class="dv">1</span>, <span class="dt">y =</span> Axis.<span class="dv">2</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Vendor, <span class="dt">shape =</span> SampleType)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> Label)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(
+    <span class="dt">title =</span> <span class="st">&quot;PCoA plot of Unweighted Unifrac Distances across Mice&quot;</span>,
+    <span class="dt">x =</span> <span class="kw">paste0</span>(<span class="st">&quot;PCoA Axis 1 (&quot;</span>, pc_pct[<span class="dv">1</span>], <span class="st">&quot;%)&quot;</span>),
+    <span class="dt">y =</span> <span class="kw">paste0</span>(<span class="st">&quot;PCoA Axis 2 (&quot;</span>, pc_pct[<span class="dv">2</span>], <span class="st">&quot;%)&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<div class="figure"><span id="fig:pcoa-ex"></span>
+<img src="final_paper_files/figure-html/pcoa-ex-1.png" alt="PCoA plot of microbiota distances between mice" width="672" />
+<p class="caption">
+Figure 3.1: PCoA plot of microbiota distances between mice
+</p>
+</div>
+<p>In Figure <a href="dim-red.html#fig:pcoa-ex">3.1</a>, the PCoA plot was created from the microbiota distance matrix for each mouse (two points per mouse, since the microbiota was sampled in the cecum as well as in the stool). As shown on the axes, the first PCoA Axis explains 31% of the variance in the original distance matrix. Creating a PCoA plot allows for a quick and relatively simple way to visualize high-dimensional data to inform future decisions on machine learning. From this plot, it is interesting to note the separation of the different mice microbiota samples based on where the mice were bought.</p>
+</div>
+</div>
+<div id="t-sne" class="section level2">
+<h2><span class="header-section-number">3.3</span> t-SNE</h2>
+<p>Another commonly used dimensionality reduction technique is t-Distributed Stochastic Neighbor Embedding (t-SNE) <span class="citation">(Maaten and Hinton <a href="#ref-maaten2008visualizing">2008</a>)</span>, which is a type of manifold learning. t-SNE starts by calculating pairwise distances in the high-dimensional space and using that information to calculate probabilities of a point being next to each other <span class="citation">(Strayer <a href="#ref-tsnejs">2018</a>)</span>. The method then randomly maps the points onto a two-dimensional space and attempts to move the points – so that the probabilities of being next to the other points is similar to the original probabilities in the high-dimensional space <span class="citation">(Strayer <a href="#ref-tsnejs">2018</a>)</span>. While a powerful technique, there are important caveats when compared to techniques such as PCA. The usage of random placing and probability-based calculations mean that when each time t-SNE is run, the result is slightly different (unlike in PCA or PCoA where each run is guaranteed to be the same). Furthermore, different settings in determining the calculation of conditional probabilities can impact the final outcome of the two-dimensional mapping.</p>
+<div id="t-sne-example" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> t-SNE example</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create tsne model</span>
+do_tsne &lt;-<span class="st"> </span><span class="cf">function</span>(dist_matrix, perp) {
+  <span class="kw">set.seed</span>(<span class="dv">9</span>)
+  tsne_model &lt;-<span class="st"> </span><span class="kw">Rtsne</span>(<span class="kw">as.matrix</span>(dist_matrix),
+                      <span class="dt">check_duplicates =</span> <span class="ot">FALSE</span>,
+                      <span class="dt">is_distance =</span> <span class="ot">TRUE</span>,
+                      <span class="dt">pca =</span> <span class="ot">FALSE</span>,
+                      <span class="dt">perplexity =</span> perp,
+                      <span class="dt">theta =</span> <span class="fl">0.5</span>,
+                      <span class="dt">dims =</span> <span class="dv">2</span>)
+
+  <span class="kw">return</span>(<span class="kw">as.data.frame</span>(tsne_model<span class="op">$</span>Y))
+}
+
+df_tsne &lt;-<span class="st"> </span><span class="kw">do_tsne</span>(uu, <span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">perp =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">cbind</span>(s_vendor)
+
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">9</span>)) {
+  df &lt;-<span class="st"> </span><span class="kw">do_tsne</span>(uu, i) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">perp =</span> i) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">cbind</span>(s_vendor)
+  
+  df_tsne &lt;-<span class="st"> </span><span class="kw">rbind</span>(df_tsne, df)
+}
+
+<span class="kw">ggplot</span>(df_tsne, <span class="kw">aes</span>(<span class="dt">x =</span> V1, <span class="dt">y =</span> V2, <span class="dt">color =</span> Vendor)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;t-SNE Plot on Unweighted UniFrac Distances across Mice&quot;</span>,
+       <span class="dt">subtitle =</span> <span class="st">&quot;With varying perplexity settings&quot;</span>,
+       <span class="dt">x =</span> <span class="st">&quot;t-SNE Axis 1&quot;</span>,
+       <span class="dt">y =</span> <span class="st">&quot;t-SNE Axis 2&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>perp, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:tsne-ex"></span>
+<img src="final_paper_files/figure-html/tsne-ex-1.png" alt="t-SNE plot of microbiota distances between mice" width="100%" />
+<p class="caption">
+Figure 3.2: t-SNE plot of microbiota distances between mice
+</p>
+</div>
+<p>In Figure <a href="dim-red.html#fig:tsne-ex">3.2</a>, t-SNE analysis was done on the same distance matrix as in Figure <a href="dim-red.html#fig:pcoa-ex">3.1</a> to transform into a two-dimensional space. As with PCoA, one can see the differential clustering by vendor. As mentioned in the previous paragraph, t-SNE results can change based on the different settings. Figure <a href="dim-red.html#fig:tsne-ex">3.2</a> demonstrates how changing the <code>perplexity</code> can impact the final result (number in gray bar indicates the perplexity for that subplot).</p>
+</div>
+</div>
+<div id="other-dimensionality-reduction-techniques" class="section level2">
+<h2><span class="header-section-number">3.4</span> Other dimensionality reduction techniques</h2>
+<p>PCA, PCoA, and t-SNE are common techniques used for dimensionality reduction, but there are other methods that may perform better in different contexts. For instance, a recent paper describes a new technique similar to t-SNE for single-cell RNA sequencing called uniform approximation and projection (UMAP) <span class="citation">(Becht et al. <a href="#ref-becht2018dimensionality">2018</a>)</span>. This method, like t-SNE, is considered a nonlinear dimensionality reduction technique, as opposed to PCA where the usage of linear combinations makes it a linear dimensionality reduction technique. While there are multiple techniques available, the usage of PCA, PCoA, and t-SNE are sufficient to demonstrate the machine learning techniques in the next section.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-shalizi">
+<p>Shalizi, Cosma Rohilla. 2018. <em>Advanced Data Analysis from an Elementary Point of View</em>. Pittsburgh, PA: Carnegie Mellon University. <a href="http://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/" class="uri">http://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/</a>.</p>
+</div>
+<div id="ref-maaten2008visualizing">
+<p>Maaten, Laurens van der, and Geoffrey Hinton. 2008. “Visualizing Data Using T-Sne.” <em>Journal of Machine Learning Research</em> 9 (Nov): 2579–2605.</p>
+</div>
+<div id="ref-tsnejs">
+<p>Strayer, Nick. 2018. “T-Sne Explained in Plain Javascript.” <a href="https://beta.observablehq.com/@nstrayer/t-sne-explained-in-plain-javascript" class="uri">https://beta.observablehq.com/@nstrayer/t-sne-explained-in-plain-javascript</a>.</p>
+</div>
+<div id="ref-becht2018dimensionality">
+<p>Becht, Etienne, Leland McInnes, John Healy, Charles-Antoine Dutertre, Immanuel WH Kwok, Lai Guan Ng, Florent Ginhoux, and Evan W Newell. 2018. “Dimensionality Reduction for Visualizing Single-Cell Data Using Umap.” <em>Nature Biotechnology</em>. Nature Publishing Group.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bg.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sup-learn.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["final_paper.pdf", "final_paper.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
