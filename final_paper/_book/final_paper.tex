@@ -516,7 +516,7 @@ drawn. From looking at how well the lines can represent the data points,
 this graph is meant to demonstrate that some data, but not all, may work
 well with a linear regression model. Even though linear regression may
 be simple, it can be useful (i.e.~for the relationship between glycine
-and lycine) or not informative (i.e.~for the relationship between
+and lycine) or not as informative (i.e.~for the relationship between
 glycine and histidine).
 
 There are many types of regressions that are extensions of linear
@@ -628,7 +628,7 @@ different variables and construct a tree for predicting the final
 classification. The algorithm aims to create the smallest tree (requires
 the least number of variables) that increases information gain
 (selecting variables that can split the data into two subsets that are
-individually homogenous).
+individually homogenous) \citep{dt}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -834,9 +834,9 @@ from agglomerative clustering by its approach in dividing the data.
 Agglomerative clustering, as its name suggests, starts with the data
 points as individual parts and starts grouping those together to create
 the tree (as if drawing the tree from the branches to the root)
-\citep{cluster}. Divisive takes the opposite approach and starts with
-all the data points in one group and divides that group to create the
-tree (as if drawing the tree from root to the branches)
+\citep{cluster}. Divisive clustering takes the opposite approach and
+starts with all the data points in one group and divides that group to
+create the tree (as if drawing the tree from root to the branches)
 \citep{0521865719, cluster}. The advantage of divisive clustering is
 that it takes into account how the data looks at a global perspective,
 whereas agglomerative clustering loses that perspective when starting
@@ -946,7 +946,7 @@ In Figure \ref{fig:km-ex}, this clustering was done on the same PCoA
 transformed data for unweighted UniFrac distances between mice. The
 value of \(k\) (indicated by number in the gray bar) was varied and then
 graphed to show how the clusters appear (each cluster was assigned a
-number). In \ref{fig:km-ex-ws}, it is possible to use the
+number). In Figure \ref{fig:km-ex-ws}, it is possible to use the
 \texttt{total\ within\ sum\ of\ squares} measure to determine the best
 \(k\) value. The points dip and start to progress in a flat trajectory
 around \(k=4\), suggesting that \(k=4\) is the best \(k\) value for this
@@ -1000,8 +1000,8 @@ others''\footnote{This is a modified version of George E.P. Box's quote
   \citep{box1976science, box1979robustness}.}. While it may seem
 unfortunate, this quote has some validity. For instance, the human eye
 and brain can distinguish clusters and grouping that are difficult for
-computers to recapitulate. In the PCoA plots that were used in this
-paper, we are capable of quickly discerning the groups manually by eye.
+computers to recapitulate. In the PCoA plot that was used in this paper,
+we are capable of quickly discerning the groups manually by eye.
 However, using our own eyes leaves room for error and potential
 inconsistencies across people. As such, my view of machine learning is
 as a way of emulating and improving on what humans can do -- lending
