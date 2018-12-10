@@ -719,10 +719,10 @@ NN and the field of deep learning, like many of the methods mentioned
 here, are topics that can each be written about in their own paper (or
 book) \citep{Goodfellow-et-al-2016}. This subsection only serves to
 briefly introduce this and include resources for further exploration.
-NNs, in short, aim to mimic how neurons act \footnote{The developers of
-  a software package called TensorFlow (an open-source package for
-  running neural networks) have also created an interactive simulation
-  of neural networks at this link
+NNs, in short, aim to mimic how neurons act\footnote{The developers of a
+  software package called TensorFlow (an open-source package for running
+  neural networks) have also created an interactive simulation of neural
+  networks at this link
   (\url(\url{https://playground.tensorflow.org/})).}. The input of data
 (analogous to neurotransmitters) results in an output (analogous to
 whether or not the neuron fires). The beauty of neural networks lies
@@ -780,10 +780,19 @@ points can be classified by which side they fall on the hyperplane.
 
 \begin{figure}
 \centering
-\includegraphics{final_paper_files/figure-latex/unnamed-chunk-5-1.pdf}
-\caption{\label{fig:unnamed-chunk-5}SVM classification of unweighted UniFrac
+\includegraphics{final_paper_files/figure-latex/svm-ex-1.pdf}
+\caption{\label{fig:svm-ex}SVM classification of unweighted UniFrac
 distances}
 \end{figure}
+
+In Figure \ref{fig:svm-ex}, SVM was applied to the PCoA transformed
+dataset (as seen in Figure \ref{fig:pcoa-ex}). If the data points from
+Figure \ref{fig:pcoa-ex} are mirrored and then rotated, the points will
+be the same as seen here in Figure \ref{fig:svm-ex}. Based on the
+shading, it is interesting to note how SVM can demarcate areas
+associated with different vendors in the PCoA space. These boundaries
+are effective, at least for this dataset, in classifying the samples by
+the correct vendor.
 
 \chapter{Unsupervised Learning}\label{unsup_learn}
 
@@ -865,7 +874,7 @@ here at Penn.
 
 }
 
-\caption{Simple HMM example}\label{fig:unnamed-chunk-6}
+\caption{Simple HMM example}\label{fig:unnamed-chunk-5}
 \end{figure}
 
 \bibliography{book.bib,packages.bib}
