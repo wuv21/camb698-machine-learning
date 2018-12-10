@@ -520,18 +520,19 @@ and lycine) or not informative (i.e.~for the relationship between
 glycine and histidine).
 
 There are many types of regressions that are extensions of linear
-regression\footnote{The developers of a software package called
-  TensorFlow have also created an interactive simulation of neural
-  networks at this link
-  (\url(\url{https://playground.tensorflow.org/})).}. For instance, a
-multilinear regression factors in more than one input variable to
-predict an output variable. Logistic regression is common in the
-biological sciences when trying to analyze a dependent variable that has
-a binary output (i.e. \(y = 0\) or \(y = 1\)) \citep{shalizi}. This type
-of regression calculates the probability of \(y = 1\), as a function of
-the independent variables. As such, a probability of greater or equal to
-0.5 will result in a prediction that \(y = 1\), otherwise it will
-predict \(y = 0\). Multinomial regression (also known as polytomous
+regression\footnote{A useful resource for understanding regressions and
+  other statistical topics is Pennsylvania State University's online
+  documentation for their statistic courses. For example, STAT 504
+  covers multinomial logistic regression and can be found at this link
+  \url(\url{https://onlinecourses.science.psu.edu/stat504/node/172/}).}.
+For instance, a multilinear regression factors in more than one input
+variable to predict an output variable. Logistic regression is common in
+the biological sciences when trying to analyze a dependent variable that
+has a binary output (i.e. \(y = 0\) or \(y = 1\)) \citep{shalizi}. This
+type of regression calculates the probability of \(y = 1\), as a
+function of the independent variables. As such, a probability of greater
+or equal to 0.5 will result in a prediction that \(y = 1\), otherwise it
+will predict \(y = 0\). Multinomial regression (also known as polytomous
 regression) builds on the same principles as logistic regression. The
 main difference is that multinomial regression works for a dependent
 variable that has more than two categories (i.e. \(y = 0\), \(y = 1\),
@@ -719,8 +720,9 @@ here, are topics that can each be written about in their own paper (or
 book) \citep{Goodfellow-et-al-2016}. This subsection only serves to
 briefly introduce this and include resources for further exploration.
 NNs, in short, aim to mimic how neurons act \footnote{The developers of
-  a software package called TensorFlow have also created an interactive
-  simulation of neural networks at this link
+  a software package called TensorFlow (an open-source package for
+  running neural networks) have also created an interactive simulation
+  of neural networks at this link
   (\url(\url{https://playground.tensorflow.org/})).}. The input of data
 (analogous to neurotransmitters) results in an output (analogous to
 whether or not the neuron fires). The beauty of neural networks lies
@@ -728,27 +730,30 @@ within its name, where multiple layers of neurons are connected with
 each other. NNs have impressive predictive capabilities by learning from
 vast amounts of data. For instance, NNs can be trained to recognize
 objects in pictures, to recognize handwriting, and other tasks that
-strike at the core of deep learning \citep{Goodfellow-et-al-2016}. NN
-are increasingly present in the biological sciences as research groups
-contribute towards large and accessible databases, which present prime
-opportunities for the development of neural networks to predict outputs
-such as treatment outcomes \citep{snow1994artificial, kappen1993neural}
-and diagnoses
+strike at the core of deep learning
+\citep{Nielsen-2015, Goodfellow-et-al-2016}. NN are increasingly present
+in the biological sciences as research groups contribute towards large
+and accessible databases, which present prime opportunities for the
+development of neural networks to predict outputs such as treatment
+outcomes \citep{snow1994artificial, kappen1993neural} and diagnoses
 \citep{ercal1994neural, acharya2018deep, esteva2017dermatologist}.
 
 \section{Support vector machines
 (SVM)}\label{support-vector-machines-svm}
 
-SVM is a popular method used for classification in the biological
-sciences because of its ability to deal with high dimensional data and
-to look at non-linear relationships. This method searches for a
-hyperplane (in 2D: a line; in 3D: a plane, etc.) that can separate the
-data points, which is determined by having the largest average distance
-from each of the data points to the hyperplane. SVM employs a method
-called a kernel trick to perceive data points in different dimensional
-space in order to find the best hyperplane. After a hyperplane is
-identified, new data points can be classified by which side they fall on
-the hyperplane.
+SVM is a popular method \citep{furey2000support, guyon2002gene} used for
+classification in the biological sciences because of its ability to deal
+with high dimensional data and to look at non-linear relationships. This
+method searches for a hyperplane (in 2D: a line; in 3D: a plane, etc.)
+that can separate the data points, which is determined by having the
+largest average distance from each of the data points to the hyperplane
+\citep{svmdata}. SVM employs a method called a kernel trick\footnote{This
+  post
+  (\url(\url{https://stats.stackexchange.com/questions/152897/how-to-intuitively-explain-what-a-kernel-is}))
+  offers an explanation about how kernel tricks work.} to perceive data
+points in different dimensional space in order to find the best
+hyperplane \citep{svmdata}. After a hyperplane is identified, new data
+points can be classified by which side they fall on the hyperplane.
 
 \subsection{SVM example}\label{svm-example}
 
