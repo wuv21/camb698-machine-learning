@@ -821,10 +821,10 @@ data points, which can then be portrayed as a binary tree (each branch
 point separates into two children). In a hierarchical clustering
 dendrogram, the similarities between two points can be assessed by
 looking at the height of the first shared node (analogous to looking at
-the most recent common ancestor in a phylogeny). Hierarchical clustering
-can provide insight on any underlying structure and can be useful when
-accompanied with heatmaps to show clusters in a quantitative and
-qualitative manner.
+the most recent common ancestor in a phylogeny) \citep{cluster}.
+Hierarchical clustering can provide insight on any underlying structure
+and can be useful when accompanied with heatmaps to show clusters in a
+quantitative and qualitative manner \citep{cluster}.
 
 \section{Hierarchical divisive
 clustering}\label{hierarchical-divisive-clustering}
@@ -833,13 +833,14 @@ Divisive clustering is a type of hierarchical clustering that differs
 from agglomerative clustering by its approach in dividing the data.
 Agglomerative clustering, as its name suggests, starts with the data
 points as individual parts and starts grouping those together to create
-the tree (as if drawing the tree from the branches to the root).
-Divisive takes the opposite approach and starts with all the data points
-in one group and divides that group to create the tree (as if drawing
-the tree from root to the branches). The advantage of divisive
-clustering is that it takes into account how the data looks at a global
-perspective, whereas agglomerative clustering loses that perspective
-when starting with each data point as an individual.
+the tree (as if drawing the tree from the branches to the root)
+\citep{cluster}. Divisive takes the opposite approach and starts with
+all the data points in one group and divides that group to create the
+tree (as if drawing the tree from root to the branches)
+\citep{0521865719, cluster}. The advantage of divisive clustering is
+that it takes into account how the data looks at a global perspective,
+whereas agglomerative clustering loses that perspective when starting
+with each data point as an individual \citep{cluster}.
 
 Two of the methods to divide the first group for divisive clustering
 include k-means and partitioning across medoids (PAM). While there are
@@ -952,18 +953,20 @@ specific data.
 \section{Hidden Markov models (HMM)}\label{hidden-markov-models-hmm}
 
 A Markov model is a model that describes a system where state
-transitions are random and are independent of past events. For example,
-the below figure shows a two state Markov model. From state A, there is
-a 30\% chance of going back to state A or a 70\% chance of going to
-state B regardless of any previous transitions. This simple model can be
+transitions are random and are independent of past events
+\citep{rabiner1986introduction, eddy2004hidden}. For example, the below
+figure shows a two state Markov model. From state A, there is a 30\%
+chance of going back to state A or a 70\% chance of going to state B
+regardless of any previous transitions. This simple model can be
 extended to multiple states with more transition weights. In HMMs, the
-overall idea is the same but there can also be hidden states and
-weights. HMMs are commonly used when studying nucleotide or amino acid
-sequences. Examples include sequence alignment tools as well as the
-HMMER program, which can take in an amino acid sequence and output
-proteins that are related to your sequence of interest. Furthermore,
-HMMs have been used for species-level and even strain-level
-identification for microbiome studies via the QIIME program, developed
+overall idea is similar but there can also be hidden states and weights.
+HMMs are commonly used when studying nucleotide or amino acid sequences
+\citep{eddy1998profile, eddy2004hidden}. Examples include sequence
+alignment tools as well as the HMMER program \citep{finn2011hmmer},
+which can take in an amino acid sequence and output proteins that are
+related to your sequence of interest. Furthermore, HMMs have been used
+for species-level and even strain-level identification for microbiome
+studies via the HmmUFOtu program \citep{zheng2018hmmufotu}, developed
 here at Penn.
 
 \begin{figure}
