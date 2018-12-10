@@ -10,6 +10,7 @@ Divisive clustering is a type of hierarchical clustering that differs from agglo
 
 Two of the methods to divide the first group for divisive clustering include k-means and partitioning across medoids (PAM). While there are significant differences between the two methods, the idea is similar in which clusters are created based on the proximity to the closest centroid (mean of a specific cluster of data points) or to the medoid (a data point that is selected as the center of a cluster). The difficulty for either method comes to choosing the value for $k$, which is the number of clusters that the scientist must assign *a priori*. There are multiple techniques for deciding $k$, such as the sum of squares method or the silhouette method.
 
+### K-means example
 ```{r}
 do_kmeans <- function(df, dist) {
   df_kmeans <- df

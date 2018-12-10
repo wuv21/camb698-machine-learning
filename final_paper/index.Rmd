@@ -1,9 +1,9 @@
 --- 
-title: "CAMB 698 Final Paper"
+title: "Machine Learning for Biological Sciences"
 author: "Vincent Wu"
 date: "`r Sys.Date()`"
 output: pdf_document
-description: Final paper covering machine learning topics
+description: Final paper for CAMB 698 covering machine learning topics
 documentclass: book
 classoption: openany
 link-citations: true

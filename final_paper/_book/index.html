@@ -5,27 +5,27 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>CAMB 698 Final Paper</title>
-  <meta name="description" content="Final paper covering machine learning topics">
+  <title>Machine Learning for Biological Sciences</title>
+  <meta name="description" content="Final paper for CAMB 698 covering machine learning topics">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="CAMB 698 Final Paper" />
+  <meta property="og:title" content="Machine Learning for Biological Sciences" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Final paper covering machine learning topics" />
+  <meta property="og:description" content="Final paper for CAMB 698 covering machine learning topics" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="CAMB 698 Final Paper" />
+  <meta name="twitter:title" content="Machine Learning for Biological Sciences" />
   
-  <meta name="twitter:description" content="Final paper covering machine learning topics" />
+  <meta name="twitter:description" content="Final paper for CAMB 698 covering machine learning topics" />
   
 
 <meta name="author" content="Vincent Wu">
 
 
-<meta name="date" content="2018-12-09">
+<meta name="date" content="2018-12-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -104,7 +104,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="./">CAMB 698 Final Paper</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequesites</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preword</a></li>
 <li class="chapter" data-level="2" data-path="bg.html"><a href="bg.html"><i class="fa fa-check"></i><b>2</b> Background</a></li>
 <li class="chapter" data-level="3" data-path="dim-red.html"><a href="dim-red.html"><i class="fa fa-check"></i><b>3</b> Dimensionality reduction</a><ul>
 <li class="chapter" data-level="3.1" data-path="dim-red.html"><a href="dim-red.html#introduction-to-dimensionality-reduction"><i class="fa fa-check"></i><b>3.1</b> Introduction to dimensionality reduction</a></li>
@@ -124,7 +124,22 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.3" data-path="sup-learn.html"><a href="sup-learn.html#k-nearest-neighbors-knn"><i class="fa fa-check"></i><b>4.3</b> K-nearest neighbors (KNN)</a><ul>
 <li class="chapter" data-level="4.3.1" data-path="sup-learn.html"><a href="sup-learn.html#knn-example"><i class="fa fa-check"></i><b>4.3.1</b> KNN example</a></li>
 </ul></li>
+<li class="chapter" data-level="4.4" data-path="sup-learn.html"><a href="sup-learn.html#decision-trees"><i class="fa fa-check"></i><b>4.4</b> Decision trees</a></li>
+<li class="chapter" data-level="4.5" data-path="sup-learn.html"><a href="sup-learn.html#random-forests"><i class="fa fa-check"></i><b>4.5</b> Random forests</a></li>
+<li class="chapter" data-level="4.6" data-path="sup-learn.html"><a href="sup-learn.html#neural-networks-nn"><i class="fa fa-check"></i><b>4.6</b> Neural networks (NN)</a></li>
+<li class="chapter" data-level="4.7" data-path="sup-learn.html"><a href="sup-learn.html#support-vector-machines-svm"><i class="fa fa-check"></i><b>4.7</b> Support vector machines (SVM)</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="sup-learn.html"><a href="sup-learn.html#svm-example"><i class="fa fa-check"></i><b>4.7.1</b> SVM example</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="unsup-learn.html"><a href="unsup-learn.html"><i class="fa fa-check"></i><b>5</b> Unsupervised Learning</a><ul>
+<li class="chapter" data-level="5.1" data-path="unsup-learn.html"><a href="unsup-learn.html#introduction-to-unsupervised-learning"><i class="fa fa-check"></i><b>5.1</b> Introduction to unsupervised learning</a></li>
+<li class="chapter" data-level="5.2" data-path="unsup-learn.html"><a href="unsup-learn.html#hierarchical-agglomerative-clustering"><i class="fa fa-check"></i><b>5.2</b> Hierarchical agglomerative clustering</a></li>
+<li class="chapter" data-level="5.3" data-path="unsup-learn.html"><a href="unsup-learn.html#hierarchical-divisive-clustering"><i class="fa fa-check"></i><b>5.3</b> Hierarchical divisive clustering</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="unsup-learn.html"><a href="unsup-learn.html#k-means-example"><i class="fa fa-check"></i><b>5.3.1</b> K-means example</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="unsup-learn.html"><a href="unsup-learn.html#hidden-markov-models-hmm"><i class="fa fa-check"></i><b>5.4</b> Hidden Markov models (HMM)</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="con.html"><a href="con.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -137,7 +152,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CAMB 698 Final Paper</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Machine Learning for Biological Sciences</a>
           </h1>
         </div>
 
@@ -146,13 +161,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">CAMB 698 Final Paper</h1>
+<h1 class="title">Machine Learning for Biological Sciences</h1>
 <p class="author"><em>Vincent Wu</em></p>
-<p class="date"><em>2018-12-09</em></p>
+<p class="date"><em>2018-12-10</em></p>
 </div>
-<div id="prerequesites" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Prerequesites</h1>
-<p>This book will feature code and graphs produced using the R statistical language. Below are packages that will be used throughout this book.</p>
+<div id="preword" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Preword</h1>
+<p>This book is written and compiled using the <code>bookdown</code> package for the R statistical language. Sections of this book will feature code and graphs produced using R as well. As will be discussed in the next chapter, the purpose of this paper is to introduce and broadly cover common machine learning techniques that are used in the biological sciences. Any included R code is for generating graphs and results to provide additional content in conveying the different techniques. As such, I opted to include the R code as a starting point for any readers who want to explore the techniques.</p>
+<p>The following code in this chapter are needed to load in additional software packages as well as to load in the data that will be used.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(usedist)
 <span class="kw">library</span>(qiimer)
@@ -160,8 +176,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(ggplot2)
 
 <span class="kw">library</span>(ape)
-<span class="kw">library</span>(Rtsne)</code></pre></div>
-<p>The below code will load in the data that will be used in the next sections.</p>
+<span class="kw">library</span>(tree)
+<span class="kw">library</span>(Rtsne)
+<span class="kw">library</span>(class)
+<span class="kw">library</span>(randomForest)
+<span class="kw">library</span>(e1071)
+<span class="kw">library</span>(cluster)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&quot;data/poop_across_penn1.Rdata&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create vendor/mice dataframe</span>
 s_vendor_all &lt;-<span class="st"> </span>s <span class="op">%&gt;%</span>

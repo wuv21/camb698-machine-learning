@@ -25,7 +25,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{hyperref}
 \hypersetup{unicode=true,
-            pdftitle={CAMB 698 Final Paper},
+            pdftitle={Machine Learning for Biological Sciences},
             pdfauthor={Vincent Wu},
             pdfborder={0 0 0},
             breaklinks=true}
@@ -118,7 +118,7 @@
 
 \setlength{\droptitle}{-2em}
 
-  \title{CAMB 698 Final Paper}
+  \title{Machine Learning for Biological Sciences}
     \pretitle{\vspace{\droptitle}\centering\huge}
   \posttitle{\par}
     \author{Vincent Wu}
@@ -406,7 +406,8 @@ two-dimensional space. As with PCoA, one can see the differential
 clustering by vendor. As mentioned in the previous paragraph, t-SNE
 results can change based on the different settings. Figure
 \ref{fig:tsne-ex} demonstrates how changing the \texttt{perplexity} can
-impact the final result.
+impact the final result (number in gray bar indicates the perplexity for
+that subplot).
 
 \section{Other dimensionality reduction
 techniques}\label{other-dimensionality-reduction-techniques}
@@ -854,6 +855,8 @@ number of clusters that the scientist must assign \emph{a priori}. There
 are multiple techniques for deciding \(k\), such as the sum of squares
 method or the silhouette method.
 
+\subsection{K-means example}\label{k-means-example}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{do_kmeans <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(df, dist) \{}
@@ -981,7 +984,40 @@ here at Penn.
 
 \chapter{Conclusion}\label{con}
 
-A
+The techniques mentioned in this paper are only a subset of the wide
+spectrum of techniques that are being used and developed. These methods,
+spanning from linear regression to hidden Markov models, are all context
+dependent -- in terms of the data (i.e.~whether there is missing data,
+categorical vs continuous, etc.) and the hypotheses that one is trying
+to answer. Choosing the ``right'' method is not an easy task and must
+also take into account what has been done in the field. Furthermore, the
+increased communication and synergy between research fields has allowed
+for novel applications of a field's existing tools/methods to a
+different field.
+
+During a discussion one day, my class mentor and I referred to a saying
+that ``all models are wrong; but some are less wrong than
+others''\footnote{This is a modified version of George E.P. Box's quote
+  from two of his papers: ``All models are wrong but some are useful''
+  \citep{box1976science, box1979robustness}.}. While it may seem
+unfortunate, this quote has some validity. For instance, the human eye
+and brain can distinguish clusters and grouping that are difficult for
+computers to recapitulate. In the PCoA plots that were used in this
+paper, we are capable of quickly discerning the groups manually by eye.
+However, using our own eyes leaves room for error and potential
+inconsistencies across people. As such, my view of machine learning is
+as a way of emulating and improving on what humans can do -- lending
+itself to the idea of ``learning''.
+
+The benefits of machine learning methods far outweigh the limitations.
+Machine learning can process data on a larger and faster scale than we
+can, especially in higher dimensional spaces with many data points.
+These methods are capable of processing and understanding the underlying
+relationships within data -- especially from sources like
+next-generation sequencing. Developing new techniques as well as
+improving the accessibility of existing techniques to the larger
+scientific community will create opportunities for unique questions to
+be answered.
 
 \bibliography{book.bib,packages.bib}
 

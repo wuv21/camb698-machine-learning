@@ -79,7 +79,7 @@ ggplot(df_tsne, aes(x = V1, y = V2, color = Vendor)) +
   facet_wrap(~ perp, scales = "free")
 ```
 
-In Figure \@ref(fig:tsne-ex), t-SNE analysis was done on the same distance matrix as in Figure \@ref(fig:pcoa-ex) to transform into a two-dimensional space. As with PCoA, one can see the differential clustering by vendor. As mentioned in the previous paragraph, t-SNE results can change based on the different settings. Figure \@ref(fig:tsne-ex) demonstrates how changing the `perplexity` can impact the final result.
+In Figure \@ref(fig:tsne-ex), t-SNE analysis was done on the same distance matrix as in Figure \@ref(fig:pcoa-ex) to transform into a two-dimensional space. As with PCoA, one can see the differential clustering by vendor. As mentioned in the previous paragraph, t-SNE results can change based on the different settings. Figure \@ref(fig:tsne-ex) demonstrates how changing the `perplexity` can impact the final result (number in gray bar indicates the perplexity for that subplot).
 
 ## Other dimensionality reduction techniques
 PCA, PCoA, and t-SNE are common techniques used for dimensionality reduction, but there are other methods that may perform better in different contexts. For instance, a recent paper describes a new technique similar to t-SNE for single-cell RNA sequencing called uniform approximation and projection (UMAP) [@becht2018dimensionality].  This method, like t-SNE, is considered a nonlinear dimensionality reduction technique, as opposed to PCA where the usage of linear combinations makes it a linear dimensionality reduction technique. While there are multiple techniques available, the usage of PCA, PCoA, and t-SNE are sufficient to demonstrate the machine learning techniques in the next section.
