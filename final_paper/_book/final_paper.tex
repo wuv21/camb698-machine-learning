@@ -126,7 +126,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-12-09}
+    \date{2018-12-10}
 
 \usepackage{booktabs}
 
@@ -442,16 +442,16 @@ either data or paper restraints.
 
 Regression is one of the simple (but still powerful) forms of supervised
 learning. In brief, regression is an attempt to understand the
-relationship between the input and output. A linear regression (commonly
-seen in papers with a plot, a regression line, a \(r^2\) value, and a
-p-value) establishes a line with the lowest mean squared error (distance
-between the data points and the line). The \(r^2\) value, also known as
-the coefficient of determination, describes how much of the variation in
-the output (typically the y-axis variable) is explained by the input
-(typically the x-axis variable). As mentioned in the background, the
-bias-variance tradeoff plays a role here as the ability to predict an
-output is determined by the mean squared error (or an equivalent
-measure).
+relationship between the input and output \citep{shalizi}. A linear
+regression (commonly seen in papers with a plot, a regression line, a
+\(r^2\) value, and a p-value) establishes a line with the lowest mean
+squared error (distance between the data points and the line). The
+\(r^2\) value, also known as the coefficient of determination, describes
+how much of the variation in the output (typically the y-axis variable)
+is explained by the input (typically the x-axis variable). As mentioned
+in the background, the bias-variance tradeoff plays a role here as the
+ability to predict an output is determined by the mean squared error (or
+an equivalent measure) \citep{shalizi}.
 
 \subsection{Linear regression example}\label{linear-regression-example}
 
@@ -504,19 +504,34 @@ measure).
 
 \begin{figure}
 \centering
-\includegraphics{final_paper_files/figure-latex/unnamed-chunk-4-1.pdf}
-\caption{\label{fig:unnamed-chunk-4}Linear regression example}
+\includegraphics{final_paper_files/figure-latex/linreg-ex-1.pdf}
+\caption{\label{fig:linreg-ex}Linear regression example}
 \end{figure}
 
+In Figure \ref{fig:linreg-ex}, metabolomic data was used due to the
+restraints inherent to regression functions. Amino acid concentrations
+were measured from stool samples. Glycine concentrations were then
+compared with the other amino acids and a linear regression line was
+drawn. From looking at how well the lines can represent the data points,
+this graph is meant to demonstrate that some data, but not all, may work
+well with a linear regression model. Even though linear regression may
+be simple, it can be useful (i.e.~for the relationship between glycine
+and lycine) or not informative (i.e.~for the relationship between
+glycine and histidine).
+
 There are many types of regressions that are extensions of linear
-regression. For instance, a multilinear regression factors in more than
-one input variable to predict an output variable. Logistic regression is
-common in the biological sciences when trying to analyze a dependent
-variable that has a binary output (i.e. \(y = 0\) or \(y = 1\)). This
-type of regression calculates the probability of \(y = 1\), as a
-function of the independent variables. As such, a probability of greater
-or equal to 0.5 will result in a prediction that \(y = 1\), otherwise it
-will predict \(y = 0\). Multinomial regression (also known as polytomous
+regression\footnote{The developers of a software package called
+  TensorFlow have also created an interactive simulation of neural
+  networks at this link
+  (\url(\url{https://playground.tensorflow.org/})).}. For instance, a
+multilinear regression factors in more than one input variable to
+predict an output variable. Logistic regression is common in the
+biological sciences when trying to analyze a dependent variable that has
+a binary output (i.e. \(y = 0\) or \(y = 1\)) \citep{shalizi}. This type
+of regression calculates the probability of \(y = 1\), as a function of
+the independent variables. As such, a probability of greater or equal to
+0.5 will result in a prediction that \(y = 1\), otherwise it will
+predict \(y = 0\). Multinomial regression (also known as polytomous
 regression) builds on the same principles as logistic regression. The
 main difference is that multinomial regression works for a dependent
 variable that has more than two categories (i.e. \(y = 0\), \(y = 1\),
@@ -525,20 +540,21 @@ or \(y = 2\)).
 \section{K-nearest neighbors (KNN)}\label{k-nearest-neighbors-knn}
 
 KNN is a type of regression which takes into the account the distance
-between points, hence its name. This algorithm calculates the distance
-between data points and a new data point of interest (will be referred
-to as the query) to predict its classification. Of the ¬k (a positive
-integer that is less than the number of original data points) data
-points that are closest to the query, the algorithm will then return the
-mode or mean of the classifications of those data points (which is
-already known). The thought is that the samples with the closest
-distances to the query are likely to have the same classification, which
-would be the predicted output for the query. KNN falls under the
+between points, hence its name \citep{shalizi}. This algorithm
+calculates the distance between data points and a new data point of
+interest (will be referred to as the query) to predict its
+classification \citep{knn}. Of the \(k\) (a positive integer that is
+less than the number of original data points) data points that are
+closest to the query, the algorithm will then return the mode or mean of
+the classifications of those data points (which is already known)
+\citep{knn}. The thought is that the samples with the closest distances
+to the query are likely to have the same classification, which would be
+the predicted output for the query \citep{knn}. KNN falls under the
 category of a linear smoother in creating a regression curve that is
-smooth and close to the actual mean, when \(k\) is increased. The
-choosing of \(k\) for optimal KNN performance is important due to the
-bias-variance tradeoff but will not be discussed in this paper due to
-paper length restraints.
+smooth and close to the actual mean, when \(k\) is increased
+\citep{shalizi}. The choosing of \(k\) for optimal KNN performance is
+important due to the bias-variance tradeoff but will not be discussed in
+this paper due to paper length restraints \citep{shalizi}.
 
 \subsection{KNN example}\label{knn-example}
 
@@ -573,14 +589,13 @@ paper length restraints.
   \KeywordTok{return}\NormalTok{(res)}
 \NormalTok{\}}
 
-\NormalTok{res_df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{k =} \KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{100}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{100}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{100}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{100}\NormalTok{)),}
-                     \DataTypeTok{accuracy =} \KeywordTok{c}\NormalTok{(}\KeywordTok{run_knn}\NormalTok{(}\DecValTok{2}\NormalTok{),}
-                                  \KeywordTok{run_knn}\NormalTok{(}\DecValTok{3}\NormalTok{),}
+\NormalTok{res_df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{k =} \KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{100}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{100}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{100}\NormalTok{)),}
+                     \DataTypeTok{accuracy =} \KeywordTok{c}\NormalTok{(}\KeywordTok{run_knn}\NormalTok{(}\DecValTok{3}\NormalTok{),}
                                   \KeywordTok{run_knn}\NormalTok{(}\DecValTok{4}\NormalTok{),}
                                   \KeywordTok{run_knn}\NormalTok{(}\DecValTok{5}\NormalTok{)))}
 
 \KeywordTok{ggplot}\NormalTok{(res_df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ accuracy, }\DataTypeTok{fill =} \KeywordTok{as.factor}\NormalTok{(k), }\DataTypeTok{color =} \KeywordTok{as.factor}\NormalTok{(k))) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_density}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.8}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_density}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.6}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"KNN Regression with Varied k values"}\NormalTok{,}
        \DataTypeTok{color =} \StringTok{"k value"}\NormalTok{,}
        \DataTypeTok{fill =} \StringTok{"k value"}\NormalTok{,}
@@ -592,9 +607,16 @@ paper length restraints.
 
 \begin{figure}
 \centering
-\includegraphics{final_paper_files/figure-latex/unnamed-chunk-5-1.pdf}
-\caption{\label{fig:unnamed-chunk-5}KNN example}
+\includegraphics{final_paper_files/figure-latex/knn-ex-1.pdf}
+\caption{\label{fig:knn-ex}KNN example}
 \end{figure}
+
+In Figure \ref{fig:knn-ex}, the KNN method was applied to the PCoA
+transformed data points (as seen in Figure \ref{fig:pcoa-ex}). The data
+was split into a training and a testing dataset in order to see how well
+the KNN could predict vendor with different values of \(k\). The graph
+demonstrates how different values of \(k\) can impact prediction
+accuracy.
 
 \section{Decision trees}\label{decision-trees}
 
@@ -628,16 +650,24 @@ individually homogenous).
 
 \begin{figure}
 \centering
-\includegraphics{final_paper_files/figure-latex/unnamed-chunk-6-1.pdf}
-\caption{\label{fig:unnamed-chunk-6}Decision tree example using amino acid
+\includegraphics{final_paper_files/figure-latex/dt-ex-1.pdf}
+\caption{\label{fig:dt-ex}Decision tree example using amino acid
 concentrations to predict vendor}
 \end{figure}
+
+In Figure \ref{fig:dt-ex}, the decision tree method was applied to the
+metabolite dataset (as seen in Figure \ref{fig:linreg-ex}). All the
+amino acids detected were used to try to classify the samples by vendor.
+As seen in the result, isoleucine levels \(\geq\) 23.85 can predict
+samples from TAC. Proceeding down the decision tree can further separate
+the samples by using lysine levels.
 
 \section{Random forests}\label{random-forests}
 
 This method is an extension of decision trees with the same aim of
-predicting the final classification for a data point. The algorithm
-starts by randomly grabbing a chunk of data from the dataset (called the
+predicting the final classification for a data point
+\citep{breiman2001random, liaw2002classification}. The algorithm starts
+by randomly grabbing a chunk of data from the dataset (called the
 training data) and creating a single decision tree. It will then test
 the accuracy of that tree by using it on the data that was not initially
 used for constructing the tree. The algorithm then repeats this process
@@ -653,70 +683,57 @@ the predicted classification for the new data.
 \begin{Highlighting}[]
 \NormalTok{forest_res <-}\StringTok{ }\KeywordTok{randomForest}\NormalTok{(tree_fm, }\DataTypeTok{data =}\NormalTok{ aa_dt_df)}
 
-\KeywordTok{print}\NormalTok{(forest_res)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## Call:
-##  randomForest(formula = tree_fm, data = aa_dt_df) 
-##                Type of random forest: classification
-##                      Number of trees: 500
-## No. of variables tried at each split: 3
-## 
-##         OOB estimate of  error rate: 62.5%
-## Confusion matrix:
-##        CR Envigo Jax TAC class.error
-## CR      3      0   1   0        0.25
-## Envigo  1      1   2   0        0.75
-## Jax     2      1   0   1        1.00
-## TAC     0      0   2   2        0.50
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \KeywordTok{importance}\NormalTok{(forest_res)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ##                          MeanDecreaseGini
-## Arginine                       0.51740761
-## Asparagine_Aspartic_Acid       0.42382218
-## Cysteine                       0.09592381
-## Glutamine_Glutamic_Acid        0.60189648
-## Histidine                      0.11016643
-## Isoleucine                     1.15157194
-## Leucine                        0.92399438
-## Lysine                         1.04984069
-## Methionine                     1.12208837
-## Phenylalanine                  0.98854943
-## Proline                        0.60075833
-## Serine                         0.60986955
-## Threonine                      0.77132829
-## Tyrosine                       1.40581633
-## Valine                         0.86246619
+## Arginine                       0.52426159
+## Asparagine_Aspartic_Acid       0.48782994
+## Cysteine                       0.08388865
+## Glutamine_Glutamic_Acid        0.79407455
+## Histidine                      0.10707186
+## Isoleucine                     1.33005098
+## Leucine                        0.90613227
+## Lysine                         1.01425911
+## Methionine                     1.16218851
+## Phenylalanine                  0.97286201
+## Proline                        0.54284661
+## Serine                         0.63527573
+## Threonine                      0.73175700
+## Tyrosine                       1.23192239
+## Valine                         0.75157881
 \end{verbatim}
+
+The output of random forests includes its ability to accurately predict
+the samples as well as the relative importance of the independent
+variables used to construct the forest. Isoleucine is identified as an
+important separator, which supports the finding in Figure
+\ref{fig:dt-ex}.
 
 \section{Neural networks (NN)}\label{neural-networks-nn}
 
 NN and the field of deep learning, like many of the methods mentioned
 here, are topics that can each be written about in their own paper (or
-book). This subsection only serves to briefly introduce this and include
-resources for further exploration. NNs, in short, aim to mimic how
-neurons act. The input of data (analogous to neurotransmitters) results
-in an output (analogous to whether or not the neuron fires). The beauty
-of neural networks lies within its name, where multiple layers of
-neurons are connected with each other. NNs have impressive predictive
-capabilities by learning from vast amounts of data. For instance, NNs
-can be trained to recognize objects in pictures, to recognize
-handwriting, and other tasks that strike at the core of deep learning.
-NN are increasingly present in the biological sciences as research
-groups contribute towards large and accessible databases, which present
-prime opportunities for the development of neural networks to predict
-outputs such as treatment outcomes
-\citep{snow1994artificial, kappen1993neural} and diagnoses
+book) \citep{Goodfellow-et-al-2016}. This subsection only serves to
+briefly introduce this and include resources for further exploration.
+NNs, in short, aim to mimic how neurons act \footnote{The developers of
+  a software package called TensorFlow have also created an interactive
+  simulation of neural networks at this link
+  (\url(\url{https://playground.tensorflow.org/})).}. The input of data
+(analogous to neurotransmitters) results in an output (analogous to
+whether or not the neuron fires). The beauty of neural networks lies
+within its name, where multiple layers of neurons are connected with
+each other. NNs have impressive predictive capabilities by learning from
+vast amounts of data. For instance, NNs can be trained to recognize
+objects in pictures, to recognize handwriting, and other tasks that
+strike at the core of deep learning \citep{Goodfellow-et-al-2016}. NN
+are increasingly present in the biological sciences as research groups
+contribute towards large and accessible databases, which present prime
+opportunities for the development of neural networks to predict outputs
+such as treatment outcomes \citep{snow1994artificial, kappen1993neural}
+and diagnoses
 \citep{ercal1994neural, acharya2018deep, esteva2017dermatologist}.
 
 \section{Support vector machines
@@ -758,8 +775,8 @@ the hyperplane.
 
 \begin{figure}
 \centering
-\includegraphics{final_paper_files/figure-latex/unnamed-chunk-9-1.pdf}
-\caption{\label{fig:unnamed-chunk-9}SVM classification of unweighted UniFrac
+\includegraphics{final_paper_files/figure-latex/unnamed-chunk-5-1.pdf}
+\caption{\label{fig:unnamed-chunk-5}SVM classification of unweighted UniFrac
 distances}
 \end{figure}
 
@@ -843,7 +860,7 @@ here at Penn.
 
 }
 
-\caption{Simple HMM example}\label{fig:unnamed-chunk-10}
+\caption{Simple HMM example}\label{fig:unnamed-chunk-6}
 \end{figure}
 
 \bibliography{book.bib,packages.bib}
