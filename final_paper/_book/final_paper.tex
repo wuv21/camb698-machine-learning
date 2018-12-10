@@ -166,6 +166,7 @@ software packages as well as to load in the data that will be used.
 \KeywordTok{library}\NormalTok{(class)}
 \KeywordTok{library}\NormalTok{(randomForest)}
 \KeywordTok{library}\NormalTok{(e1071)}
+\KeywordTok{library}\NormalTok{(cluster)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -848,8 +849,105 @@ centroid (mean of a specific cluster of data points) or to the medoid (a
 data point that is selected as the center of a cluster). The difficulty
 for either method comes to choosing the value for \(k\), which is the
 number of clusters that the scientist must assign \emph{a priori}. There
-are multiple techniques for deciding \(k\), such as the silhouette
-method which is shown in the below graphs.
+are multiple techniques for deciding \(k\), such as the sum of squares
+method or the silhouette method.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{do_kmeans <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(df, dist) \{}
+\NormalTok{  df_kmeans <-}\StringTok{ }\NormalTok{df}
+\NormalTok{  sum_sq <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{  col_names <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{  sil_width <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{  iterations <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\OperatorTok{:}\DecValTok{10}\NormalTok{)}
+  
+  \CommentTok{# run kmeans}
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ iterations) \{}
+\NormalTok{    kmeans_model <-}\StringTok{ }\KeywordTok{kmeans}\NormalTok{(}\KeywordTok{scale}\NormalTok{(df), i)}
+    
+\NormalTok{    col_name <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"cl_kmeans_"}\NormalTok{, i, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+\NormalTok{    col_names <-}\StringTok{ }\KeywordTok{c}\NormalTok{(col_names, col_name)}
+    
+\NormalTok{    df_kmeans[, col_name] <-}\StringTok{ }\NormalTok{kmeans_model}\OperatorTok{$}\NormalTok{cluster}
+\NormalTok{    sum_sq <-}\StringTok{ }\KeywordTok{c}\NormalTok{(sum_sq, kmeans_model}\OperatorTok{$}\NormalTok{tot.withinss)}
+    
+\NormalTok{    sil <-}\StringTok{ }\KeywordTok{silhouette}\NormalTok{(kmeans_model}\OperatorTok{$}\NormalTok{cluster, dist)}
+\NormalTok{    sil_width <-}\StringTok{ }\KeywordTok{c}\NormalTok{(sil_width, }\KeywordTok{summary}\NormalTok{(sil)}\OperatorTok{$}\NormalTok{avg.width)}
+\NormalTok{  \}}
+  
+\NormalTok{  df_kmeans <-}\StringTok{ }\NormalTok{df_kmeans }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{gather_}\NormalTok{(}\StringTok{"k"}\NormalTok{, }\StringTok{"cluster"}\NormalTok{, col_names) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{k =} \KeywordTok{gsub}\NormalTok{(}\StringTok{"^cl_kmeans_"}\NormalTok{, }\StringTok{""}\NormalTok{, k))}
+  
+  \CommentTok{# plot clustering}
+\NormalTok{  p <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(df_kmeans, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ V1, }\DataTypeTok{y =}\NormalTok{ V2, }\DataTypeTok{color =} \KeywordTok{as.factor}\NormalTok{(cluster))) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"k-means clustering"}\NormalTok{,}
+         \DataTypeTok{x =} \StringTok{"Axis 1"}\NormalTok{,}
+         \DataTypeTok{y =} \StringTok{"Axis 2"}\NormalTok{,}
+         \DataTypeTok{color =} \StringTok{"Cluster #"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{theme_bw}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\CommentTok{# scale_color_viridis(discrete = TRUE) +}
+\StringTok{    }\KeywordTok{facet_wrap}\NormalTok{( }\OperatorTok{~}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(k))}
+  
+  \CommentTok{# look at sum of squares}
+\NormalTok{  p2 <-}\StringTok{ }\KeywordTok{qplot}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ iterations, }\DataTypeTok{y =}\NormalTok{ sum_sq) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Which k to pick?"}\NormalTok{,}
+         \DataTypeTok{subtitle =} \StringTok{"Sum of squares method"}\NormalTok{,}
+         \DataTypeTok{x =} \StringTok{"k"}\NormalTok{,}
+         \DataTypeTok{y =} \StringTok{"Total within sum of squares"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{theme_bw}\NormalTok{()}
+  
+  \KeywordTok{return}\NormalTok{(}\KeywordTok{list}\NormalTok{(p, p2))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rename_pc_df <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(df) \{}
+\NormalTok{  df <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(Axis.}\DecValTok{1}\NormalTok{, Axis.}\DecValTok{2}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{V1 =}\NormalTok{ Axis.}\DecValTok{1}\NormalTok{,}
+           \DataTypeTok{V2 =}\NormalTok{ Axis.}\DecValTok{2}\NormalTok{)}
+  
+  \KeywordTok{return}\NormalTok{(df)}
+\NormalTok{\}}
+
+\NormalTok{graphs <-}\StringTok{ }\KeywordTok{do_kmeans}\NormalTok{(}\KeywordTok{rename_pc_df}\NormalTok{(pc_df_uu), uu)}
+
+\NormalTok{graphs[[}\DecValTok{1}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{final_paper_files/figure-latex/km-ex-1.pdf}
+\caption{\label{fig:km-ex}Kmeans clustering with different k values}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{graphs[[}\DecValTok{2}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{final_paper_files/figure-latex/km-ex-ws-1.pdf}
+\caption{\label{fig:km-ex-ws}Deciding which k to use}
+\end{figure}
+
+In Figure \ref{fig:km-ex}, this clustering was done on the same PCoA
+transformed data for unweighted UniFrac distances between mice. The
+value of \(k\) (indicated by number in the gray bar) was varied and then
+graphed to show how the clusters appear (each cluster was assigned a
+number). In \ref{fig:km-ex-ws}, it is possible to use the
+\texttt{total\ within\ sum\ of\ squares} measure to determine the best
+\(k\) value. The points dip and start to progress in a flat trajectory
+around \(k=4\), suggesting that \(k=4\) is the best \(k\) value for this
+specific data.
 
 \section{Hidden Markov models (HMM)}\label{hidden-markov-models-hmm}
 
@@ -874,7 +972,7 @@ here at Penn.
 
 }
 
-\caption{Simple HMM example}\label{fig:unnamed-chunk-5}
+\caption{Simple HMM example}\label{fig:unnamed-chunk-6}
 \end{figure}
 
 \bibliography{book.bib,packages.bib}
